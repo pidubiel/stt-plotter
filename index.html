@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./styles.css">
+  <title>STT Plotter</title>
+</head>
+<body>
+    <input type='file' accept='text/plain' onchange='openFile(event)'><br>
+  <div class="container">
+    <div class="ls">
+      <div class="plot" id="diagram_Load-Stroke"></div>
+      <h2>Przytnij LS</h2>
+      <button class="cut-data-beginLS">Przytnij LS Od Przodu!</button>
+      <button class="cut-data-endLS">Przytnij LS Od Końca!</button>
+    </div>
+    <div class="le">
+      <div class="plot" id="diagram_Load-Extension"></div>
+      <h2>Przytnij LE</h2>
+      <button class="cut-data-beginLE">Przytnij LE Od Przodu!</button>
+      <button class="cut-data-endLE">Przytnij LE Od Końca!</button>
+    </div>
+
+    
+
+  </div>
+  <button class="back">Cofnij</button>
+  <button class="reset">Reset</button>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="dist/main.js"></script>
+</body>
+</html>
