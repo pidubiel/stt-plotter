@@ -1,5 +1,7 @@
 import drawPlot from './drawPlot';
 import splitText from './splitText';
+import parseRecord from './parseRecord'
+import parseLoad from './parseLoad'
 
 const fileInput = document.querySelector('input[type="file"]');
 
@@ -14,48 +16,22 @@ fileInput.addEventListener('change', function(e) {
     const data = splitText(text);
 
     let arrayOfData = [];
-
-    //This function returns parsed line of data from data.txt
-    function parseRecord(dataStringLine) {
-      var record = {
-        load: (Number(dataStringLine.split(" ")[0].replace(",","."))),
-        stroke: (Number(dataStringLine.split(" ")[1].replace(",","."))),
-        extension: (Number(dataStringLine.split(" ")[2].replace(",","."))),
-        command: (Number(dataStringLine.split(" ")[3].replace(",","."))),
-        time: (Number(dataStringLine.split(" ")[4].replace(",",".")))
-      }
-      return record
-    }
     let arrayOfDataLS = []; //load - stroke
     let arrayOfDataLE = []; //load - extension
 
     const arrayOfDataLS_raw = arrayOfDataLS;
     const arrayOfDataLE_raw = arrayOfDataLE;
 
-    function parseStrokeLoad(dataObject) {
-      let coordinates = [];
-      coordinates.push(dataObject.stroke);
-      coordinates.push(dataObject.load);
-      return coordinates
-    }
-
-    function parseExtensionLoad(dataObject) {
-      let coordinates = [];
-      coordinates.push(dataObject.extension);
-      coordinates.push(dataObject.load)
-      return coordinates
-    }
-
     for (let i = 0; i < data.length; i++) {
       arrayOfData.push(parseRecord(data[i]));
     }
 
     for (let i = 0; i < data.length; i++) {
-      arrayOfDataLS.push(parseStrokeLoad(arrayOfData[i]));
+      arrayOfDataLS.push(parseLoad(arrayOfData[i], 'stroke'));
     }
 
     for (let i = 0; i < data.length; i++) {
-      arrayOfDataLE.push(parseExtensionLoad(arrayOfData[i]));
+      arrayOfDataLE.push(parseLoad(arrayOfData[i], 'extension'));
     }
     console.log(arrayOfDataLE);
     let xScale_domain;
@@ -109,13 +85,6 @@ fileInput.addEventListener('change', function(e) {
       }
     }
 
-    // cut_data_begin.addEventListener('click', () => {
-    //   arrayOfDataLS = arrayOfDataLS.slice(10, arrayOfDataLS.length);
-    //   graph.innerHTML = '';
-    //   drawPlot(arrayOfDataLS, 'Load-Stroke');
-    //   drawPlot(arrayOfDataLE, 'Load-Extension');
-    // })
-
     cut_data_beginLS.addEventListener('click', () => cut_data('ls', 'begin'));
     cut_data_endLS.addEventListener('click', () => cut_data('ls', 'end'));
 
@@ -135,8 +104,6 @@ fileInput.addEventListener('change', function(e) {
   reader.readAsText(input.files[0]);
 }, false);
 
-var openFile = function(event) {
 
-};
 
 
