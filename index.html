@@ -8,27 +8,28 @@
   <title>STT Plotter</title>
 </head>
 <body>
-    <input type='file' accept='text/plain'><br>
+    <input id="input" type='file' accept='text/plain'><br>
+
   <div class="container">
+
     <div class="ls">
       <div class="plot" id="diagram_Load-Stroke"></div>
       <h2>Przytnij LS</h2>
       <button class="cut-data-beginLS">Przytnij LS Od Przodu!</button>
       <button class="cut-data-endLS">Przytnij LS Od Końca!</button>
+      <button class="reset">Reset</button>
     </div>
     <div class="le">
       <div class="plot" id="diagram_Load-Extension"></div>
       <h2>Przytnij LE</h2>
       <button class="cut-data-beginLE">Przytnij LE Od Przodu!</button>
       <button class="cut-data-endLE">Przytnij LE Od Końca!</button>
+      <button class="reset">Reset</button>
     </div>
-
-    
 
   </div>
   <button class="back">Cofnij</button>
-  <button class="reset">Reset</button>
-  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-  <script src="dist/bundle.js"></script>
+
+
 </body>
 </html>

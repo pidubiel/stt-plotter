@@ -2,6 +2,8 @@ import drawPlot from './drawPlot';
 import splitText from './splitText';
 
 const fileInput = document.querySelector('input[type="file"]');
+
+
 fileInput.addEventListener('change', function(e) {
   var input = event.target;
 
@@ -133,8 +135,8 @@ fileInput.addEventListener('change', function(e) {
   reader.readAsText(input.files[0]);
 }, false);
 
-// var openFile = function(event) {
+var openFile = function(event) {
 
-// };
+};
 
 

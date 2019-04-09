@@ -3,10 +3,10 @@ import * as d3 from "d3";
 export default function drawPlot(data, name, xScale) {
   //document.querySelector('.container').append('p').textContent('Stroke Load')
   var margin = {top: 20, right: 20, bottom: 90, left: 50},
-  margin2 = {top: 230, right: 20, bottom: 30, left: 50},
-  width = 600 - margin.left - margin.right,
-  height = 300 - margin.top - margin.bottom,
-  height2 = 300 - margin2.top - margin2.bottom;
+      margin2 = {top: 230, right: 20, bottom: 30, left: 50},
+      width = 600 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom,
+      height2 = 300 - margin2.top - margin2.bottom;
 
   // var margin = {top: 40, right: 40, bottom: 180, left: 100},
   // margin2 = {top: 560, right: 40, bottom: 60, left: 100},
@@ -18,8 +18,8 @@ export default function drawPlot(data, name, xScale) {
   //this is svg is actually group
 
   var svg = d3.select("#diagram_" + name).append("svg")
-  .attr("width",width+margin.left+margin.right)
-  .attr("height",height+margin.top+margin.bottom);
+  .attr("width", width+margin.left+margin.right)
+  .attr("height", height+margin.top+margin.bottom);
   
   // if(name === 'Load-Stroke') {
   //   var svg = d3.select("#diagramLS").append("svg")
@@ -33,7 +33,7 @@ export default function drawPlot(data, name, xScale) {
   //   .classed('plotLE', true);
   // }
 
-      svg.append('text').attr('x', 270).attr('y', 15).text(name).attr('font-size', '15px').attr('fill', 'orangered');
+  svg.append('text').attr('x', 270).attr('y', 15).text(name).attr('font-size', '15px').attr('fill', 'orangered');
 
   var focus = svg.append("g")  //add group to leave margin for axis
       .attr("transform","translate("+margin.left+","+margin.top+")");
