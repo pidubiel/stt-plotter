@@ -20,20 +20,14 @@ export default function drawPlot(data, name, xScale) {
   var svg = d3.select("#diagram_" + name).append("svg")
   .attr("width", width+margin.left+margin.right)
   .attr("height", height+margin.top+margin.bottom);
-  
-  // if(name === 'Load-Stroke') {
-  //   var svg = d3.select("#diagramLS").append("svg")
-  //   .attr("width",width+margin.left+margin.right)
-  //   .attr("height",height+margin.top+margin.bottom)
-  //   .classed('plotLS', true);
-  // } else if(name === 'Load-Extension') {
-  //   var svg = d3.select("#diagramLE").append("svg")
-  //   .attr("width",width+margin.left+margin.right)
-  //   .attr("height",height+margin.top+margin.bottom)
-  //   .classed('plotLE', true);
-  // }
 
-  svg.append('text').attr('x', 270).attr('y', 15).text(name).attr('font-size', '15px').attr('fill', 'orangered');
+  if (name == 'Load-Stroke') {
+    svg.append('text').attr('x', 160).attr('y', 15).text('Wykres Siły od Przemieszczenia (Load-Stroke)').attr('font-size', '15px').attr('fill', '#4677E8');
+  } else {
+    svg.append('text').attr('x', 160).attr('y', 15).text('Wykres Siły od Wydłużenia (Load-Extenstion)').attr('font-size', '15px').attr('fill', '#4677E8');
+  }
+
+  //svg.append('text').attr('x', 270).attr('y', 15).text(name).attr('font-size', '15px').attr('fill', 'orangered');
 
   var focus = svg.append("g")  //add group to leave margin for axis
       .attr("transform","translate("+margin.left+","+margin.top+")");
@@ -136,6 +130,7 @@ export default function drawPlot(data, name, xScale) {
   xScale.domain(d3.event.transform.rescaleX(xScale2).domain());
   focus.select(".line").attr("d",line(dataset));
   xAxisGroup.call(xAxis);//rescale x
+  console.log('xScale:', xScale);
   //brush area
   context.select(".brush").call(brush.move, [xScale2(d3.event.transform.rescaleX(xScale2).domain()[0]),xScale2(d3.event.transform.rescaleX(xScale2).domain()[1])]);
   //context.select(".brush").call(brush.move, [-58.313, -56]);

@@ -82,3 +82,23 @@ h2 {
   fill: none;
   pointer-events: all;
 }  
+
+#cutLS, #cutLE {
+  width: 100px;
+  height: 40px;
+  font-size: 40px;
+}
+
+.buttonQuantity {
+  width: 190px;
+  margin: auto;
+}
+
+.container {
+  width: 2000px;
+}
+/* input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+} */

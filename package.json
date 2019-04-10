@@ -1,7 +1,7 @@
 {
   "name": "stt_plotter",
   "version": "1.0.0",
-  "description": "Web application for visualization and editing data from tensile test machine.",
+  "description": "Web application for visualization and editing data from tensile test machine. 📈",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
