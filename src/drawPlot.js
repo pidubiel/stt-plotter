@@ -130,7 +130,7 @@ export default function drawPlot(data, name, xScale) {
   xScale.domain(d3.event.transform.rescaleX(xScale2).domain());
   focus.select(".line").attr("d",line(dataset));
   xAxisGroup.call(xAxis);//rescale x
-  console.log('xScale:', xScale);
+  //console.log('xScale:', xScale);
   //brush area
   context.select(".brush").call(brush.move, [xScale2(d3.event.transform.rescaleX(xScale2).domain()[0]),xScale2(d3.event.transform.rescaleX(xScale2).domain()[1])]);
   //context.select(".brush").call(brush.move, [-58.313, -56]);

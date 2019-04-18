@@ -4,6 +4,34 @@ import parseRecord from './parseRecord'
 import parseLoad from './parseLoad'
 //import cutData from './cutData'
 
+//NUMBER SPINNER-----------------------------------------------------------------------------
+var numberSpinner = (function() {
+  $('.number-spinner>.ns-btn>a').click(function() {
+    var btn = $(this),
+      oldValue = btn.closest('.number-spinner').find('input').val().trim(),
+      newVal = 0;
+
+    if (btn.attr('data-dir') === 'up') {
+      newVal = parseInt(oldValue) + 1;
+    } else {
+      if (oldValue > 1) {
+        newVal = parseInt(oldValue) - 1;
+      } else {
+        newVal = 1;
+      }
+    }
+    btn.closest('.number-spinner').find('input').val(newVal);
+  });
+  $('.number-spinner>input').keypress(function(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  });
+})();
+//------------------------------------------------------------------------------------------
 
 const fileInput = document.querySelector('input[type="file"]');
 
@@ -35,6 +63,7 @@ function cutData(plotName, position, amount) {
     graph.innerHTML = '';
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
+    console.log(arrayOfDataLS.length);
   } else if(plotName == 'ls' && position == 'end') {
     arrayOfDataLS = arrayOfDataLS.slice(0, arrayOfDataLS.length - amount);
     graph[0].innerHTML = '';
@@ -56,6 +85,8 @@ function cutData(plotName, position, amount) {
     graph.innerHTML = '';
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
+    console.log('LE End:', arrayOfDataLE.length);
+    console.log(arrayOfDataLE[arrayOfDataLE.length-1]);
   }
 }
 
@@ -99,7 +130,7 @@ fileInput.addEventListener('change', function(e) {
     });
     
     cutData_endLE.addEventListener('click', () => {
-      cutData('le', 'end', cutAmountLS.value)
+      cutData('le', 'end', cutAmountLE.value)
     });
 
     // reset.addEventListener('click', () => {
@@ -122,6 +153,21 @@ fileInput.addEventListener('change', function(e) {
       drawPlot(arrayOfDataLE_raw, 'Load-Extension');
       arrayOfDataLE = arrayOfDataLE_raw;
     });
+
+    function download(text, filename){
+      var blob = new Blob([text], {type: "text/plain"});
+      var url = window.URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+    }
+    
+    download("this is the file", "text.txt");
+
+    document.querySelector('.exportLE_data').addEventListener('click', () => {
+      console.log('Dane LE: ', arrayOfDataLE);
+    })
 
   }
   reader.readAsText(input.files[0]);

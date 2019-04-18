@@ -7,7 +7,7 @@ body {
 .container {
   display: flex;
   justify-content: space-around;
-  max-width: 1300px;
+  max-width: 1250px;
   margin: 50px auto;
   background-color: white;
   padding: 50px 0 50px 0;
@@ -84,21 +84,86 @@ h2 {
 }  
 
 #cutLS, #cutLE {
-  width: 100px;
-  height: 40px;
-  font-size: 40px;
+  font-size: 20px;
 }
 
 .buttonQuantity {
   width: 190px;
   margin: auto;
 }
-
-.container {
-  width: 2000px;
+button {
+  width: 200px;
 }
+
 /* input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
       -webkit-appearance: none; 
       margin: 0; 
 } */
+
+/* ----------------------------------------- NUMBER SPINNER ----------------------------------------- */
+.number-spinner {
+  max-width: 150px;
+  line-height: 40px;
+  padding: 0px;
+  margin: 30px auto;
+  border-radius: 4px;
+  border: 2px solid #e2e2e2;
+  overflow: hidden;
+  position: relative;
+  display: table;
+}
+.number-spinner input {
+  height: 40px;
+  max-height: 40px;
+  line-height: 40px;
+  font-size: 1em;
+  padding: 0;
+  margin: 0;
+  border: none;
+  position: relative;
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+.number-spinner input:focus {
+  outline: none;
+}
+.number-spinner .ns-btn {
+  position: relative;
+  font-size: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  display: table-cell;
+  cursor: pointer;
+}
+.number-spinner .ns-btn a {
+  height: 40px;
+  min-height: 40px;
+  width: 40px;
+  padding: 0;
+  max-width: 40px;
+  line-height: 40px;
+  border-radius: 0;
+  border: none;
+  text-align: center;
+  position: relative;
+  background: #e2e2e2;
+  color: #333;
+  display: inline-block;
+  vertical-align: middle;
+  text-decoration: none;
+}
+.number-spinner .ns-btn .icon-minus:after {
+  content: "\002212";
+  font-size: 35px;
+  line-height: 38px;
+  color: 'red';
+  font-weight: bold;
+}
+.number-spinner .ns-btn .icon-plus:after {
+  content: "\00002B";
+  font-size: 38px;
+  line-height: 35px;
+  font-weight: bold;
+}
