@@ -2,6 +2,7 @@ import drawPlot from './drawPlot';
 import splitText from './splitText';
 import parseRecord from './parseRecord'
 import parseLoad from './parseLoad'
+import exportData from './exportData'
 //import cutData from './cutData'
 
 //NUMBER SPINNER-----------------------------------------------------------------------------
@@ -34,8 +35,6 @@ var numberSpinner = (function() {
 //------------------------------------------------------------------------------------------
 
 const fileInput = document.querySelector('input[type="file"]');
-
-
 
 let arrayOfData = [];
 let arrayOfDataLS = []; //load - stroke
@@ -97,7 +96,7 @@ fileInput.addEventListener('change', function(e) {
   reader.onload = function(){
 
     var text = reader.result; //String from input file
-    const data = splitText(text);
+    const data = splitText(text)[0];
 
     const arrayOfDataLS_raw = arrayOfDataLS;
     const arrayOfDataLE_raw = arrayOfDataLE;
@@ -154,20 +153,26 @@ fileInput.addEventListener('change', function(e) {
       arrayOfDataLE = arrayOfDataLE_raw;
     });
 
-    function download(text, filename){
-      var blob = new Blob([text], {type: "text/plain"});
-      var url = window.URL.createObjectURL(blob);
-      var a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      a.click();
-    }
-    
-    download("this is the file", "text.txt");
 
-    document.querySelector('.exportLE_data').addEventListener('click', () => {
-      console.log('Dane LE: ', arrayOfDataLE);
-    })
+
+    document.querySelector('.exportLS_data').addEventListener('click', () => {
+      //console.log(arrayOfDataLS.join('           '));
+      let LS_recordLine = [];
+      LS_recordLine[0] = arrayOfDataLS[0][0] + '          ' + arrayOfDataLS[0][1];
+
+      for(let i = 0; i < arrayOfDataLS.length - 1; i++) {
+        let load;
+        load = `-${(Math.abs(arrayOfDataLS[i][0]).toPrecision(5)).toString()}`;
+        //LS_recordLine.push(arrayOfDataLS[i][0] + '          ' + arrayOfDataLS[i][1]);
+        LS_recordLine.push(load + '          ' + arrayOfDataLS[i][1]);
+      }
+      // const LS_txt = arrayOfDataLS.map(element => {
+
+      // });
+      //console.log(splitText(text)[1].concat(arrayOfDataLS[0]));
+      exportData(splitText(text)[1].concat(LS_recordLine.join('\n')), "header.txt");
+    });
+    
 
   }
   reader.readAsText(input.files[0]);
