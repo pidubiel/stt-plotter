@@ -95,9 +95,9 @@ fileInput.addEventListener('change', function(e) {
   var reader = new FileReader();
   reader.onload = function(){
 
+    console.log('READER: ', reader);
     var text = reader.result; //String from input file
     const data = splitText(text)[0];
-
     const arrayOfDataLS_raw = arrayOfDataLS;
     const arrayOfDataLE_raw = arrayOfDataLE;
 
@@ -108,10 +108,18 @@ fileInput.addEventListener('change', function(e) {
     for (let i = 0; i < data.length; i++) {
       arrayOfDataLS.push(parseLoad(arrayOfData[i], 'stroke'));
     }
-
+    //console.log('First check: ', arrayOfDataLE);
     for (let i = 0; i < data.length; i++) {
       arrayOfDataLE.push(parseLoad(arrayOfData[i], 'extension'));
     }
+    //arrayOfDataLS.map(e => e.reverse());
+    //arrayOfDataLE.map(e => e.reverse());
+    //arrayOfDataLE.map((e,i) => e[2] = i);
+    //arrayOfDataLE.sort();
+
+    //console.log('ArrayOfData: ', arrayOfData);
+    //console.log('ArrayOfDataLS: ', arrayOfDataLS);
+    //console.log('ArrayOfDataLE: ', arrayOfDataLE);
 
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
@@ -153,24 +161,37 @@ fileInput.addEventListener('change', function(e) {
       arrayOfDataLE = arrayOfDataLE_raw;
     });
 
-
-
     document.querySelector('.exportLS_data').addEventListener('click', () => {
       //console.log(arrayOfDataLS.join('           '));
       let LS_recordLine = [];
-      LS_recordLine[0] = arrayOfDataLS[0][0] + '          ' + arrayOfDataLS[0][1];
-
       for(let i = 0; i < arrayOfDataLS.length - 1; i++) {
         let load;
         load = `-${(Math.abs(arrayOfDataLS[i][0]).toPrecision(5)).toString()}`;
-        //LS_recordLine.push(arrayOfDataLS[i][0] + '          ' + arrayOfDataLS[i][1]);
-        LS_recordLine.push(load + '          ' + arrayOfDataLS[i][1]);
+        LS_recordLine.push(arrayOfDataLS[i][1].toPrecision(4) + '          ' + load);
+        //LS_recordLine.push(arrayOfDataLS[i][1] + '          ' + arrayOfDataLS[i][0]);
       }
       // const LS_txt = arrayOfDataLS.map(element => {
 
       // });
       //console.log(splitText(text)[1].concat(arrayOfDataLS[0]));
-      exportData(splitText(text)[1].concat(LS_recordLine.join('\n')), "header.txt");
+      exportData(splitText(text)[1].concat(LS_recordLine.join('\n')), "Load-Stroke.txt");
+    });
+
+    document.querySelector('.exportLE_data').addEventListener('click', () => {
+      //console.log(arrayOfDataLS.join('           '));
+      let LE_recordLine = [];
+      for(let i = 0; i < arrayOfDataLE.length - 1; i++) {
+        // let load;
+        // load = `-${(Math.abs(arrayOfDataLE[i][0]).toPrecision(4)).toString()}`;
+        //LS_recordLine.push(arrayOfDataLS[i][0] + '          ' + arrayOfDataLS[i][1]);
+        LE_recordLine.push(arrayOfDataLE[i][1] + '                          ' + arrayOfDataLE[i][0]);
+      }
+      //console.log('ArrayLE: ', arrayOfDataLE);
+      // const LS_txt = arrayOfDataLS.map(element => {
+
+      // });
+      //console.log(splitText(text)[1].concat(arrayOfDataLS[0]));
+      exportData(splitText(text)[1].concat(LE_recordLine.join('\n')), "Load-Extension.txt");
     });
     
 
