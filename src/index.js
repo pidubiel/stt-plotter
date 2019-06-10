@@ -37,6 +37,7 @@ var numberSpinner = (function() {
 const fileInput = document.querySelector('input[type="file"]');
 
 let arrayOfData = [];
+let arrayOfData_raw = [];
 let arrayOfDataLS = []; //load - stroke
 let arrayOfDataLE = []; //load - extension
 
@@ -51,16 +52,22 @@ const cutAmountLE = document.querySelector('#cutLE');
 const resetLS = document.querySelector('.resetLS');
 const resetLE = document.querySelector('.resetLE');
 
+//Amounts of cutted values
+let cuttedLS_B = 0;
+let cuttedLS_E = 0;
+let cuttedLE_B = 0;
+let cuttedLE_E = 0;
+
 //const reset = document.querySelector('.reset');
 const graph = document.querySelectorAll('.plot');
 
 function cutData(plotName, position, amount) {
   if(plotName == 'ls' && position == 'begin') {
     arrayOfDataLS = arrayOfDataLS.slice(amount, arrayOfDataLS.length);
-    for(let i = 0; i < amount; i++) {
+    for(let i = 0; i < cuttedLS_B ; i++) {
       arrayOfData[i].stroke = 0; 
     }
-    console.log(arrayOfData);
+    //console.log(arrayOfData);
     graph[0].innerHTML = '';
     graph[1].innerHTML = '';
     graph.innerHTML = '';
@@ -68,6 +75,9 @@ function cutData(plotName, position, amount) {
     drawPlot(arrayOfDataLE, 'Load-Extension');
     //console.log(arrayOfDataLS.length);
   } else if(plotName == 'ls' && position == 'end') {
+    for(let i = ((arrayOfData.length) - cuttedLS_E); i <= (arrayOfData.length - 1); i++) {
+      arrayOfData[i].stroke = 0; 
+    }
     arrayOfDataLS = arrayOfDataLS.slice(0, arrayOfDataLS.length - amount);
     graph[0].innerHTML = '';
     graph[1].innerHTML = '';
@@ -75,6 +85,9 @@ function cutData(plotName, position, amount) {
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
   } else if(plotName == 'le' && position == 'begin') {
+    for(let i = 0; i < cuttedLE_B ; i++) {
+      arrayOfData[i].extension = 0; 
+    }
     arrayOfDataLE = arrayOfDataLE.slice(amount, arrayOfDataLE.length);
     graph[0].innerHTML = '';
     graph[1].innerHTML = '';
@@ -82,6 +95,9 @@ function cutData(plotName, position, amount) {
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
   } else if(plotName == 'le' && position == 'end') {
+    for(let i = ((arrayOfData.length) - cuttedLE_E); i <= (arrayOfData.length - 1); i++) {
+      arrayOfData[i].extension = 0; 
+    }
     arrayOfDataLE = arrayOfDataLE.slice(0, arrayOfDataLE.length - amount);
     graph[0].innerHTML = '';
     graph[1].innerHTML = '';
@@ -96,6 +112,8 @@ function cutData(plotName, position, amount) {
 fileInput.addEventListener('change', function(e) {
   var input = event.target;
 
+  //document.querySelector('.exportData').style.display = 'block';
+
   var reader = new FileReader();
   reader.onload = function(){
 
@@ -107,6 +125,7 @@ fileInput.addEventListener('change', function(e) {
 
     for (let i = 0; i < data.length; i++) {
       arrayOfData.push(parseRecord(data[i]));
+      arrayOfData_raw.push(parseRecord(data[i]));
     }
 
     for (let i = 0; i < data.length; i++) {
@@ -121,27 +140,35 @@ fileInput.addEventListener('change', function(e) {
     //arrayOfDataLE.map((e,i) => e[2] = i);
     //arrayOfDataLE.sort();
 
-    console.log('ArrayOfData: ', arrayOfData);
-    console.log('ArrayOfDataLS: ', arrayOfDataLS);
-    console.log('ArrayOfDataLE: ', arrayOfDataLE);
+    //console.log('ArrayOfData: ', arrayOfData);
+    //console.log('ArrayOfDataLS: ', arrayOfDataLS);
+    //console.log('ArrayOfDataLE: ', arrayOfDataLE);
 
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
 
     cutData_beginLS.addEventListener('click', () => {
+      cuttedLS_B += parseInt(cutAmountLS.value);
       cutData('ls', 'begin', cutAmountLS.value);
+      console.log('Cutted LS_B: ', cuttedLS_B);
     });
     
     cutData_endLS.addEventListener('click', () => {
+      cuttedLS_E += parseInt(cutAmountLS.value);
       cutData('ls', 'end', cutAmountLS.value);
+      console.log('Cutted LS_E: ', cuttedLS_E);
     });
 
     cutData_beginLE.addEventListener('click', () => {
-      cutData('le', 'begin', cutAmountLE.value)
+      cuttedLE_B += parseInt(cutAmountLE.value);
+      cutData('le', 'begin', cutAmountLE.value);
+      console.log('Cutted LE_B: ', cuttedLE_B);
     });
     
     cutData_endLE.addEventListener('click', () => {
-      cutData('le', 'end', cutAmountLE.value)
+      cuttedLE_E += parseInt(cutAmountLE.value);
+      cutData('le', 'end', cutAmountLE.value);
+      console.log('Cutted LE_E: ', cuttedLE_E);
     });
 
     // reset.addEventListener('click', () => {
@@ -157,14 +184,38 @@ fileInput.addEventListener('change', function(e) {
       graph[0].innerHTML = '';
       drawPlot(arrayOfDataLS_raw, 'Load-Stroke');
       arrayOfDataLS = arrayOfDataLS_raw;
+      //TODO: Restore stroke values from arrayOfData
+      for(let i = 0; i < arrayOfData.length; i++) {
+        arrayOfData[i].stroke = arrayOfData_raw[i].stroke
+      }
+      cuttedLS_B = 0;
+      cuttedLS_E = 0;
     });
 
     resetLE.addEventListener('click', () => {
       graph[1].innerHTML = '';
       drawPlot(arrayOfDataLE_raw, 'Load-Extension');
       arrayOfDataLE = arrayOfDataLE_raw;
+      for(let i = 0; i < arrayOfData.length; i++) {
+        arrayOfData[i].extension = arrayOfData_raw[i].extension
+      }
+      cuttedLE_B = 0;
+      cuttedLE_E = 0;
     });
 
+    //Export All Data to .txt file
+    document.querySelector('.exportData').addEventListener('click', () => {
+
+      let lines = ['Load,Stroke,Extension,Command,Time'];
+      console.log('Original Array: ', arrayOfData_raw);
+      console.log('Edited Array: ', arrayOfData);
+
+      const exportDataset = arrayOfData.map(element => {
+        lines.push(`${element.load},${element.stroke},${element.extension},${element.command},${element.time}`);
+      });
+      //exportData(lines.join('\n'), 'Data.txt');
+    })
+    /*
     document.querySelector('.exportLS_data').addEventListener('click', () => {
       //console.log(arrayOfDataLS.join('           '));
       let LS_recordLine = [];
@@ -198,7 +249,7 @@ fileInput.addEventListener('change', function(e) {
       //console.log(splitText(text)[1].concat(arrayOfDataLS[0]));
       exportData(splitText(text)[1].concat(LE_recordLine.join('\n')), "Load-Extension.txt");
     });
-    
+    */
 
   }
   reader.readAsText(input.files[0]);

@@ -95,6 +95,13 @@ button {
   width: 200px;
 }
 
+.exportData {
+  /* display: none; */
+  text-align: center;
+  margin: 0 auto;
+  align-items: center;
+}
+
 /* input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
       -webkit-appearance: none; 
