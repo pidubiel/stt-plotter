@@ -1,7 +1,7 @@
+import $ from "jquery";
 import drawPlot from './drawPlot';
 import splitText from './splitText';
 import parseRecord from './parseRecord'
-import parseLoad from './parseLoad'
 import exportData from './exportData'
 //import cutData from './cutData'
 
@@ -57,12 +57,16 @@ const graph = document.querySelectorAll('.plot');
 function cutData(plotName, position, amount) {
   if(plotName == 'ls' && position == 'begin') {
     arrayOfDataLS = arrayOfDataLS.slice(amount, arrayOfDataLS.length);
+    for(let i = 0; i < amount; i++) {
+      arrayOfData[i].stroke = 0; 
+    }
+    console.log(arrayOfData);
     graph[0].innerHTML = '';
     graph[1].innerHTML = '';
     graph.innerHTML = '';
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
-    console.log(arrayOfDataLS.length);
+    //console.log(arrayOfDataLS.length);
   } else if(plotName == 'ls' && position == 'end') {
     arrayOfDataLS = arrayOfDataLS.slice(0, arrayOfDataLS.length - amount);
     graph[0].innerHTML = '';
@@ -84,8 +88,8 @@ function cutData(plotName, position, amount) {
     graph.innerHTML = '';
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
-    console.log('LE End:', arrayOfDataLE.length);
-    console.log(arrayOfDataLE[arrayOfDataLE.length-1]);
+    //console.log('LE End:', arrayOfDataLE.length);
+    //console.log(arrayOfDataLE[arrayOfDataLE.length-1]);
   }
 }
 
@@ -95,7 +99,7 @@ fileInput.addEventListener('change', function(e) {
   var reader = new FileReader();
   reader.onload = function(){
 
-    console.log('READER: ', reader);
+    //console.log('READER: ', reader);
     var text = reader.result; //String from input file
     const data = splitText(text)[0];
     const arrayOfDataLS_raw = arrayOfDataLS;
@@ -106,20 +110,20 @@ fileInput.addEventListener('change', function(e) {
     }
 
     for (let i = 0; i < data.length; i++) {
-      arrayOfDataLS.push(parseLoad(arrayOfData[i], 'stroke'));
+      arrayOfDataLS.push([arrayOfData[i].stroke, arrayOfData[i].load]);
     }
     //console.log('First check: ', arrayOfDataLE);
     for (let i = 0; i < data.length; i++) {
-      arrayOfDataLE.push(parseLoad(arrayOfData[i], 'extension'));
+      arrayOfDataLE.push([arrayOfData[i].extension, arrayOfData[i].load]);
     }
     //arrayOfDataLS.map(e => e.reverse());
     //arrayOfDataLE.map(e => e.reverse());
     //arrayOfDataLE.map((e,i) => e[2] = i);
     //arrayOfDataLE.sort();
 
-    //console.log('ArrayOfData: ', arrayOfData);
-    //console.log('ArrayOfDataLS: ', arrayOfDataLS);
-    //console.log('ArrayOfDataLE: ', arrayOfDataLE);
+    console.log('ArrayOfData: ', arrayOfData);
+    console.log('ArrayOfDataLS: ', arrayOfDataLS);
+    console.log('ArrayOfDataLE: ', arrayOfDataLE);
 
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
@@ -164,6 +168,7 @@ fileInput.addEventListener('change', function(e) {
     document.querySelector('.exportLS_data').addEventListener('click', () => {
       //console.log(arrayOfDataLS.join('           '));
       let LS_recordLine = [];
+      //console.log(arrayOfDataLS);
       for(let i = 0; i < arrayOfDataLS.length - 1; i++) {
         let load;
         load = `-${(Math.abs(arrayOfDataLS[i][0]).toPrecision(5)).toString()}`;

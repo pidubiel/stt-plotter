@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 
 export default function drawPlot(data, name, xScale) {
+  //let domain;
   //document.querySelector('.container').append('p').textContent('Stroke Load')
   var margin = {top: 20, right: 20, bottom: 90, left: 50},
       margin2 = {top: 230, right: 20, bottom: 30, left: 50},
@@ -40,7 +41,9 @@ export default function drawPlot(data, name, xScale) {
   //set y scale
   var yScale = d3.scaleLinear().range([0,height]).domain([d3.max(dataset,function(d){return d[1];})+0.02,d3.min(dataset,function(d){return d[1];})]);
   //add x axis
-  var xScale = d3.scaleLinear().range([0,width]).domain([d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);//scaleBand is used for  bar chart
+  //var xScale = d3.scaleLinear().range([0,width]).domain([d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);//scaleBand is used for  bar chart
+  var xScale = d3.scaleLinear().range([0,width]).domain([-58.313, -56.60952617291616]);//scaleBand is used for  bar chart
+  console.log('xScale: ', [d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);
   var xScale2 = d3.scaleLinear().range([0,width]).domain([d3.min(dataset, function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);
   var yScale2 = d3.scaleLinear().range([0,height2]).domain([d3.max(dataset,function(d){return d[1];}),d3.min(dataset, function(d){return d[1];})]);
   //sort x
@@ -100,6 +103,7 @@ export default function drawPlot(data, name, xScale) {
   .call(brush.move,xScale2.range());
 
 
+
   function zoomed(){	
   /* focus.select(".line").attr("transform",d3.event.transform) will move the y position.
   Instead , you can use focus.select(".line").style("transform", "translate(" + d3.event.transform.x + "px," + 0 + "px) scale(" + d3.event.transform.k + ")");. But the width of line may be changed. Then the result will not be brush and zoom. Thus, it's better to use functions below*/
@@ -128,12 +132,17 @@ export default function drawPlot(data, name, xScale) {
   */
   if(d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
   xScale.domain(d3.event.transform.rescaleX(xScale2).domain());
+  //domain = d3.event.transform.rescaleX(xScale2).domain();
+  //console.log(d3.event.transform.rescaleX(xScale2).domain());
+  //console.log([-58.313, -56.60952617291616]);
   focus.select(".line").attr("d",line(dataset));
   xAxisGroup.call(xAxis);//rescale x
   //console.log('xScale:', xScale);
   //brush area
   context.select(".brush").call(brush.move, [xScale2(d3.event.transform.rescaleX(xScale2).domain()[0]),xScale2(d3.event.transform.rescaleX(xScale2).domain()[1])]);
+  //context.select(".brush").call(brush.move, [0, 27.89333533827877]);
   //context.select(".brush").call(brush.move, [-58.313, -56]);
+  //console.log([xScale2(d3.event.transform.rescaleX(xScale2).domain()[0]),xScale2(d3.event.transform.rescaleX(xScale2).domain()[1])]);
   }
 
   function brushed(){

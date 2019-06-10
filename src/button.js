@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 $('.btn-number').click(function(e){
   e.preventDefault();
   
