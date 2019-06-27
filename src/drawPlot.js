@@ -1,6 +1,11 @@
 import * as d3 from "d3";
 
-export default function drawPlot(data, name, xScale) {
+let Domain;
+// export default function domain() {
+//   return Domain
+// }
+
+export default function drawPlot(data, name, xScaleArg) {
   //let domain;
   //document.querySelector('.container').append('p').textContent('Stroke Load')
   var margin = {top: 20, right: 20, bottom: 90, left: 50},
@@ -8,7 +13,7 @@ export default function drawPlot(data, name, xScale) {
       width = 600 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom,
       height2 = 300 - margin2.top - margin2.bottom;
-
+  
   // var margin = {top: 40, right: 40, bottom: 180, left: 100},
   // margin2 = {top: 560, right: 40, bottom: 60, left: 100},
   // width = 1200 - margin.left - margin.right,
@@ -38,15 +43,27 @@ export default function drawPlot(data, name, xScale) {
 
   var dataset = data;
   //for each d, d[0] is the first num, d[1] is the second num
+  if(xScaleArg && name === 'Load-Stroke') {
+    console.log('Hello LS');
+    var xScale2 = d3.scaleLinear().range([0,width]).domain(xScaleArg);
+
+  } else if(xScaleArg && name == 'Load-Extension') {
+    console.log('Hello LE');
+    var xScale2 = d3.scaleLinear().range([0,width]).domain(xScaleArg);
+  } else {
+    var xScale2 = d3.scaleLinear().range([0,width]).domain([d3.min(dataset, function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);
+  }
   //set y scale
   var yScale = d3.scaleLinear().range([0,height]).domain([d3.max(dataset,function(d){return d[1];})+0.02,d3.min(dataset,function(d){return d[1];})]);
   //add x axis
-  //var xScale = d3.scaleLinear().range([0,width]).domain([d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);//scaleBand is used for  bar chart
-  var xScale = d3.scaleLinear().range([0,width]).domain([-58.313, -56.60952617291616]);//scaleBand is used for  bar chart
-  console.log('xScale: ', [d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);
-  var xScale2 = d3.scaleLinear().range([0,width]).domain([d3.min(dataset, function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);
+  var xScale = d3.scaleLinear().range([0,width]).domain([d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);//scaleBand is used for  bar chart
+  //var xScale = d3.scaleLinear().range([0,width]).domain([-58.313, -56.60952617291616]);//scaleBand is used for  bar chart
+  //console.log('xScale: ', [d3.min(dataset,function(d){return d[0];}),d3.max(dataset, function(d){return d[0];})]);
+  
+  //var xScale2 = d3.scaleLinear().range([0,width]).domain(xScale);
   var yScale2 = d3.scaleLinear().range([0,height2]).domain([d3.max(dataset,function(d){return d[1];}),d3.min(dataset, function(d){return d[1];})]);
   //sort x
+  //console.log('Argument: ', xScaleArg);
 
 
   dataset.sort((a,b) => a[0]<b[0] ? -1 : 1);
@@ -83,7 +100,10 @@ export default function drawPlot(data, name, xScale) {
       .scaleExtent([1,Infinity])// <1 means can resize smaller than  original size
       .translateExtent([[0,0],[width,height]])
       .extent([[0,0],[width,height]])//view point size
-      .on("zoom",zoomed);
+      .on("zoom", function() {
+        zoomed();
+        console.log(zoomed());
+      });
   svg.append("rect")
   .attr("class","zoom")
     .attr("width", width)
@@ -102,8 +122,7 @@ export default function drawPlot(data, name, xScale) {
   .call(brush)
   .call(brush.move,xScale2.range());
 
-
-
+  let domain;
   function zoomed(){	
   /* focus.select(".line").attr("transform",d3.event.transform) will move the y position.
   Instead , you can use focus.select(".line").style("transform", "translate(" + d3.event.transform.x + "px," + 0 + "px) scale(" + d3.event.transform.k + ")");. But the width of line may be changed. Then the result will not be brush and zoom. Thus, it's better to use functions below*/
@@ -131,18 +150,24 @@ export default function drawPlot(data, name, xScale) {
   Or use api context.select(".brush").call(brush.move, xScale.range().map(d3.event.transform.invertX,d3.event.transform));
   */
   if(d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
-  xScale.domain(d3.event.transform.rescaleX(xScale2).domain());
+  domain = d3.event.transform.rescaleX(xScale2).domain();
+  xScale.domain(domain);
+  //console.log(domain);
+  //console.log(d3.event.transform.rescaleX(xScale2).domain());
   //domain = d3.event.transform.rescaleX(xScale2).domain();
   //console.log(d3.event.transform.rescaleX(xScale2).domain());
   //console.log([-58.313, -56.60952617291616]);
   focus.select(".line").attr("d",line(dataset));
   xAxisGroup.call(xAxis);//rescale x
+  //console.log('xAxis: ', xAxis);
   //console.log('xScale:', xScale);
   //brush area
   context.select(".brush").call(brush.move, [xScale2(d3.event.transform.rescaleX(xScale2).domain()[0]),xScale2(d3.event.transform.rescaleX(xScale2).domain()[1])]);
   //context.select(".brush").call(brush.move, [0, 27.89333533827877]);
   //context.select(".brush").call(brush.move, [-58.313, -56]);
   //console.log([xScale2(d3.event.transform.rescaleX(xScale2).domain()[0]),xScale2(d3.event.transform.rescaleX(xScale2).domain()[1])]);
+  Domain = domain;
+  return domain
   }
 
   function brushed(){

@@ -71,7 +71,7 @@ function cutData(plotName, position, amount) {
     graph[0].innerHTML = '';
     graph[1].innerHTML = '';
     graph.innerHTML = '';
-    drawPlot(arrayOfDataLS, 'Load-Stroke');
+    drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703]);
     drawPlot(arrayOfDataLE, 'Load-Extension');
     //console.log(arrayOfDataLS.length);
   } else if(plotName == 'ls' && position == 'end') {
@@ -93,10 +93,12 @@ function cutData(plotName, position, amount) {
     graph[1].innerHTML = '';
     graph.innerHTML = '';
     drawPlot(arrayOfDataLS, 'Load-Stroke');
-    drawPlot(arrayOfDataLE, 'Load-Extension');
+    //drawPlot(arrayOfDataLS, 'Load-Extension', [-0.049, -0.01264400659066603]);
+    drawPlot(arrayOfDataLE, 'Load-Extension', [-0.049, 0]);
+    //drawPlot(arrayOfDataLE, 'Load-Extension');
   } else if(plotName == 'le' && position == 'end') {
     for(let i = ((arrayOfData.length) - cuttedLE_E); i <= (arrayOfData.length - 1); i++) {
-      arrayOfData[i].extension = 0; 
+      arrayOfData[i].extension =  0; 
     }
     arrayOfDataLE = arrayOfDataLE.slice(0, arrayOfDataLE.length - amount);
     graph[0].innerHTML = '';
@@ -144,6 +146,7 @@ fileInput.addEventListener('change', function(e) {
     //console.log('ArrayOfDataLS: ', arrayOfDataLS);
     //console.log('ArrayOfDataLE: ', arrayOfDataLE);
 
+    //drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.023796]);
     drawPlot(arrayOfDataLS, 'Load-Stroke');
     drawPlot(arrayOfDataLE, 'Load-Extension');
 
@@ -203,17 +206,46 @@ fileInput.addEventListener('change', function(e) {
       cuttedLE_E = 0;
     });
 
+    //Showing full plot
+    document.querySelector('.showFullPlot').addEventListener('click', () => {
+      graph[0].innerHTML = '';
+      graph[1].innerHTML = '';
+      drawPlot(arrayOfDataLS, 'Load-Stroke');
+      drawPlot(arrayOfDataLE, 'Load-Extension');
+    });
+
+    //Scale LS listener
+    document.querySelector('.acceptScaleLS').addEventListener('click', () => {
+      //TODO: Modify arrayOfData: 
+      arrayOfData.map(e => e.load = e.load + 0.5 * e.load);
+      //console.log(arrayOfDataLS[0]);
+      arrayOfDataLS.map(e => e[1] = e[1] + 0.5 * e[1]);
+      //const OO = arrayOfDataLS.forEach(e => console.log(e[1] + e[1]));
+      //console.log(arrayOfDataLS);
+      graph[0].innerHTML = '';
+      drawPlot(arrayOfDataLS, 'Load-Stroke');
+    })
+
     //Export All Data to .txt file
     document.querySelector('.exportData').addEventListener('click', () => {
 
-      let lines = ['Load,Stroke,Extension,Command,Time'];
+      let lines = ['Load      Stroke      Extension     Command     Time'];
       console.log('Original Array: ', arrayOfData_raw);
       console.log('Edited Array: ', arrayOfData);
 
       const exportDataset = arrayOfData.map(element => {
-        lines.push(`${element.load},${element.stroke},${element.extension},${element.command},${element.time}`);
+        //Make a string with equal spacing... 
+        // let tableOfData = [];
+        // tableOfData[0] = element.load;
+        // tableOfData[30] = element.stroke;
+        // tableOfData[60] = element.extension;
+        // tableOfData[90] = element.command;
+        // tableOfData[120] = element.time;
+        // tableOfData.join('');
+        // lines.push(tableOfData);
+        lines.push(`${element.load}     ${element.stroke}     ${element.extension}      ${element.command}      ${element.time}`);
       });
-      //exportData(lines.join('\n'), 'Data.txt');
+      exportData(lines.join('\n'), 'Data.txt');
     })
     /*
     document.querySelector('.exportLS_data').addEventListener('click', () => {
