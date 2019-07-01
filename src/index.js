@@ -91,10 +91,10 @@ function cutData(plotName, position, amount) {
       arrayOfData[i].extension = 0; 
     }
     arrayOfDataLE = arrayOfDataLE.slice(amount, arrayOfDataLE.length);
-    graph[0].innerHTML = '';
+    //graph[0].innerHTML = '';
     graph[1].innerHTML = '';
     graph.innerHTML = '';
-    drawPlot(arrayOfDataLS, 'Load-Stroke');
+    //drawPlot(arrayOfDataLS, 'Load-Stroke');
     //drawPlot(arrayOfDataLS, 'Load-Extension', [-0.049, -0.01264400659066603]);
     drawPlot(arrayOfDataLE, 'Load-Extension', [-0.049, 0]);
     //drawPlot(arrayOfDataLE, 'Load-Extension');

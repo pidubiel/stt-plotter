@@ -17,7 +17,7 @@
         <p>Skalowanie:</p>
         <input type="number" id="scale-value" name="scale-value"
                 min="0" max="2" step="0.1" value="1">
-        <button class='btn btn__accept acceptScale'>Zatwierdź</button>
+        <button class='btn btn__accept acceptScale btn__accept-green'>Zatwierdź</button>
         <button class='btn btn__undo btn__cancel-red' id="cancelScale">Cofnij</button>
 
       </div>
@@ -42,6 +42,22 @@
           </div>
       
             <button class="btn resetLS btn__cancel btn__cancel-red">Anulowanie przycięcia</button>
+      </div>
+
+      <div class="approx-block block">
+        <div class="approx">
+          <p class="paragraph-approx">Aproksymacja</p>
+          <div class="number-spinner spinner-approx">
+            <span class="ns-btn">
+              <a data-dir="dwn"><span class="icon-minus"></span></a>
+            </span>
+            <input type="text" class="pl-ns-value" value="1" id="cutLS" max="5" maxlength=3 autocomplete="off">
+            <span class="ns-btn">
+              <a data-dir="up"><span class="icon-plus"></span></a>
+            </span>
+          </div>
+          <button class="btn btn-approx btn__accept-green" id="approxAcceptLS">Zatwierdź</button>
+        </div>
       </div>
 
       <!-- <div class="scale-block block">
@@ -82,6 +98,21 @@
           </div>
       
             <button class="btn resetLE btn__cancel btn__cancel-red">Anulowanie przycięcia</button>
+      </div>
+      <div class="approx-block block">
+        <div class="approx">
+          <p class="paragraph-approx">Aproksymacja</p>
+          <div class="number-spinner spinner-approx">
+            <span class="ns-btn">
+              <a data-dir="dwn"><span class="icon-minus"></span></a>
+            </span>
+            <input type="text" class="pl-ns-value" value="0.001" id="cutLS" max="5" maxlength=5 autocomplete="off">
+            <span class="ns-btn">
+              <a data-dir="up"><span class="icon-plus"></span></a>
+            </span>
+          </div>
+          <button class="btn btn-approx btn__accept-green" id="approxAcceptLE">Zatwierdź</button>
+        </div>
       </div>
 
       <!-- <div class="scale-block block">
