@@ -10,7 +10,7 @@ export default function drawPlot(data, name, xScaleArg) {
   //document.querySelector('.container').append('p').textContent('Stroke Load')
   var margin = {top: 20, right: 20, bottom: 90, left: 50},
       margin2 = {top: 230, right: 20, bottom: 30, left: 50},
-      width = 600 - margin.left - margin.right,
+      width = 520 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom,
       height2 = 300 - margin2.top - margin2.bottom;
   
@@ -28,9 +28,9 @@ export default function drawPlot(data, name, xScaleArg) {
   .attr("height", height+margin.top+margin.bottom);
 
   if (name == 'Load-Stroke') {
-    svg.append('text').attr('x', 160).attr('y', 15).text('Wykres Siły od Przemieszczenia (Load-Stroke)').attr('font-size', '15px').attr('fill', '#4677E8');
+    svg.append('text').attr('x', 120).attr('y', 15).text('Wykres Siły od Przemieszczenia (Load-Stroke)').attr('font-size', '15px').attr('fill', '#000');
   } else {
-    svg.append('text').attr('x', 160).attr('y', 15).text('Wykres Siły od Wydłużenia (Load-Extenstion)').attr('font-size', '15px').attr('fill', '#4677E8');
+    svg.append('text').attr('x', 130).attr('y', 15).text('Wykres Siły od Wydłużenia (Load-Extenstion)').attr('font-size', '15px').attr('fill', '#000');
   }
 
   //svg.append('text').attr('x', 270).attr('y', 15).text(name).attr('font-size', '15px').attr('fill', 'orangered');

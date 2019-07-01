@@ -1,3 +1,9 @@
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font: 12px Arial;
   background-color: rgb(236, 236, 236);
@@ -7,12 +13,19 @@ body {
 .container {
   display: flex;
   justify-content: space-around;
-  max-width: 1250px;
-  margin: 50px auto;
+  max-width: 1100px;
+  margin: 20px auto;
   background-color: white;
-  padding: 50px 0 50px 0;
+  /* padding: 50px 0 50px 0; */
+  padding: 20px;
   border-radius: 4px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.showFullPlot {
+  margin-top: 20px;
+  padding: 5px;
+  display: none;
 }
 
 h2 {
@@ -30,6 +43,7 @@ h2 {
 
 .ls {
   text-align: center;
+  margin: 5px;
 }
 
 .ls > * {
@@ -45,6 +59,7 @@ h2 {
 
 .le {
   text-align: center;
+  margin: 5px;
 }
 
 /* path {
@@ -181,4 +196,69 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 38px;
   line-height: 35px;
   font-weight: bold;
+}
+
+.trim {
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  align-items: center;
+  margin: 0 auto;
+  padding: 8px;
+  justify-content: space-around;
+}
+
+.btn {
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.btn__cut {
+  padding: 13px;
+  width: 140px;
+}
+
+.btn__cancel {
+  padding: 13px;
+  width: 170px;
+  margin-top: 10px;
+}
+
+.block {
+  background-color: #fafafa;
+  border-radius: 3px;
+  border: 1px solid #f3f3f3;
+  margin: 10px auto;
+  max-width: 500px;
+}
+
+.scale {
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+}
+
+.btn__accept {
+  width: 80px;
+}
+
+.btn__export {
+  padding: 10px;
+  background-color: #049e5e;
+  color: white;
+  display: none;
+}
+
+.ls,
+.le {
+  display: none;
+}
+
+.loadFile_info {
+  text-align: center;
+  margin: 0 auto;
+  padding: 50px;
 }

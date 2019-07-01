@@ -114,7 +114,11 @@ function cutData(plotName, position, amount) {
 fileInput.addEventListener('change', function(e) {
   var input = event.target;
 
-  //document.querySelector('.exportData').style.display = 'block';
+  document.querySelector('.loadFile_info').style.display = 'none';
+  document.querySelector('.showFullPlot').style.display = 'inline-block';
+  document.querySelector('.ls').style.display = 'block';
+  document.querySelector('.le').style.display = 'block';
+  document.querySelector('.btn__export').style.display = 'inline-block';
 
   var reader = new FileReader();
   reader.onload = function(){
@@ -216,15 +220,33 @@ fileInput.addEventListener('change', function(e) {
 
     //Scale LS listener
     document.querySelector('.acceptScaleLS').addEventListener('click', () => {
+      //Get value of scale
+      const scaleValue = parseFloat(document.getElementById('scale-value-ls').value);
       //TODO: Modify arrayOfData: 
-      arrayOfData.map(e => e.load = e.load + 0.5 * e.load);
+      arrayOfData.map(e => e.load = e.load + scaleValue * e.load);
       //console.log(arrayOfDataLS[0]);
-      arrayOfDataLS.map(e => e[1] = e[1] + 0.5 * e[1]);
+      arrayOfDataLS.map(e => e[1] = e[1] + scaleValue * e[1]);
       //const OO = arrayOfDataLS.forEach(e => console.log(e[1] + e[1]));
       //console.log(arrayOfDataLS);
       graph[0].innerHTML = '';
-      drawPlot(arrayOfDataLS, 'Load-Stroke');
-    })
+      drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703])
+      //drawPlot(arrayOfDataLS, 'Load-Stroke');
+    });
+
+    //Scale LE listener
+    document.querySelector('.acceptScaleLE').addEventListener('click', () => {
+      //Get value of scale
+      const scaleValue = parseFloat(document.getElementById('scale-value-le').value);
+      //TODO: Modify arrayOfData: 
+      console.log(arrayOfData[1]);
+      arrayOfData.map(e => e.extension = e.extension + scaleValue * e.extension);
+      console.log(arrayOfData[1]);
+      arrayOfDataLE.map(e => e[1] = e[1] + scaleValue * e[1]);
+      //const OO = arrayOfDataLS.forEach(e => console.log(e[1] + e[1]));
+      //console.log(arrayOfDataLS);
+      graph[1].innerHTML = '';
+      drawPlot(arrayOfDataLE, 'Load-Extension');
+    });
 
     //Export All Data to .txt file
     document.querySelector('.exportData').addEventListener('click', () => {
