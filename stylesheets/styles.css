@@ -206,7 +206,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .btn {
-  border: none;
+  border: 1px solid rgb(230, 230, 230);
   border-radius: 3px;
   box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -224,6 +224,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 10px;
 }
 
+.btn__showAll {
+  width: 140px;
+}
+
 .block {
   background-color: #fafafa;
   border-radius: 3px;
@@ -233,10 +237,17 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .scale {
-  width: 400px;
   margin: 0 auto;
+  padding: 5px;
   display: flex;
+  align-items: center;
 }
+
+.scale-block {
+  width: 800px;
+  display: none;
+}
+
 
 .btn__accept {
   width: 80px;
@@ -249,11 +260,24 @@ input[type=number]::-webkit-outer-spin-button {
   display: none;
 }
 
+.btn__cancel-red {
+  background-color: rgb(201, 41, 41);
+  color: white;
+}
+
+.btn__undo {
+  width: 60px;
+}
+
 .ls,
 .le {
   display: none;
   flex-grow: 1;
   min-width: 200px;
+}
+
+#scale-value {
+  font-size: 10px;
 }
 
 .loadFile_info {

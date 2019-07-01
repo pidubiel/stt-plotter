@@ -75,6 +75,12 @@ export default function drawPlot(data, name, xScaleArg) {
 
   focus.append("path").attr("class","line").attr("d",line(dataset));
 
+  // focus.append("circle")
+  //   .style("fill", 'red')
+  //   .attr("cx", 0)
+  //   .attr("cy", 0)
+  //   .attr("r", 5);
+
   var line2 = d3.line()
     .x(function(d){return xScale2(d[0]);})
     .y(function(d){return yScale2(d[1]);})

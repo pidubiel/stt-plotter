@@ -36,6 +36,8 @@ var numberSpinner = (function() {
 
 const fileInput = document.querySelector('input[type="file"]');
 
+let canceledOnce = false;
+
 let arrayOfData = [];
 let arrayOfData_raw = [];
 let arrayOfDataLS = []; //load - stroke
@@ -119,6 +121,7 @@ fileInput.addEventListener('change', function(e) {
   document.querySelector('.ls').style.display = 'block';
   document.querySelector('.le').style.display = 'block';
   document.querySelector('.btn__export').style.display = 'inline-block';
+  document.querySelector('.scale-block').style.display = 'block';
 
   var reader = new FileReader();
   reader.onload = function(){
@@ -126,8 +129,8 @@ fileInput.addEventListener('change', function(e) {
     //console.log('READER: ', reader);
     var text = reader.result; //String from input file
     const data = splitText(text)[0];
-    const arrayOfDataLS_raw = arrayOfDataLS;
-    const arrayOfDataLE_raw = arrayOfDataLE;
+    const arrayOfDataLS_raw = [];
+    const arrayOfDataLE_raw = [];
 
     for (let i = 0; i < data.length; i++) {
       arrayOfData.push(parseRecord(data[i]));
@@ -136,10 +139,12 @@ fileInput.addEventListener('change', function(e) {
 
     for (let i = 0; i < data.length; i++) {
       arrayOfDataLS.push([arrayOfData[i].stroke, arrayOfData[i].load]);
+      arrayOfDataLS_raw.push([arrayOfData[i].stroke, arrayOfData[i].load]);
     }
     //console.log('First check: ', arrayOfDataLE);
     for (let i = 0; i < data.length; i++) {
       arrayOfDataLE.push([arrayOfData[i].extension, arrayOfData[i].load]);
+      arrayOfDataLE_raw.push([arrayOfData[i].extension, arrayOfData[i].load]);
     }
     //arrayOfDataLS.map(e => e.reverse());
     //arrayOfDataLE.map(e => e.reverse());
@@ -218,34 +223,41 @@ fileInput.addEventListener('change', function(e) {
       drawPlot(arrayOfDataLE, 'Load-Extension');
     });
 
-    //Scale LS listener
-    document.querySelector('.acceptScaleLS').addEventListener('click', () => {
-      //Get value of scale
-      const scaleValue = parseFloat(document.getElementById('scale-value-ls').value);
-      //TODO: Modify arrayOfData: 
-      arrayOfData.map(e => e.load = e.load + scaleValue * e.load);
-      //console.log(arrayOfDataLS[0]);
-      arrayOfDataLS.map(e => e[1] = e[1] + scaleValue * e[1]);
-      //const OO = arrayOfDataLS.forEach(e => console.log(e[1] + e[1]));
-      //console.log(arrayOfDataLS);
-      graph[0].innerHTML = '';
-      drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703])
-      //drawPlot(arrayOfDataLS, 'Load-Stroke');
+    //Scale All listener
+    document.querySelector('.acceptScale').addEventListener('click', () => {
+        if(!canceledOnce) {
+          //Get value of scale
+          const scaleValue = parseFloat(document.getElementById('scale-value').value);
+          //TODO: Modify arrayOfData: 
+          arrayOfData.map(e => e.load = e.load + scaleValue * e.load);
+          arrayOfData.map(e => e.extension = e.extension + scaleValue * e.extension);
+          //console.log(arrayOfDataLS[0]);
+          arrayOfDataLS.map(e => e[1] = e[1] + scaleValue * e[1]);
+          arrayOfDataLE.map(e => e[1] = e[1] + scaleValue * e[1]);
+          //const OO = arrayOfDataLS.forEach(e => console.log(e[1] + e[1]));
+          //console.log(arrayOfDataLS);
+          graph[0].innerHTML = '';
+          graph[1].innerHTML = '';
+          //drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703])
+          drawPlot(arrayOfDataLS, 'Load-Stroke');
+          drawPlot(arrayOfDataLE, 'Load-Extension');
+          canceledOnce = true;
+        } else {
+          alert('Jeśli chcesz zmienić wartość skali - ponownie wczytaj wykres.');
+        }
+
     });
 
-    //Scale LE listener
-    document.querySelector('.acceptScaleLE').addEventListener('click', () => {
-      //Get value of scale
-      const scaleValue = parseFloat(document.getElementById('scale-value-le').value);
-      //TODO: Modify arrayOfData: 
-      console.log(arrayOfData[1]);
-      arrayOfData.map(e => e.extension = e.extension + scaleValue * e.extension);
-      console.log(arrayOfData[1]);
-      arrayOfDataLE.map(e => e[1] = e[1] + scaleValue * e[1]);
-      //const OO = arrayOfDataLS.forEach(e => console.log(e[1] + e[1]));
-      //console.log(arrayOfDataLS);
+    //Cancel Scale Operation
+    document.getElementById('cancelScale').addEventListener('click', () => {
+      console.log('siema');
+      graph[0].innerHTML = '';
       graph[1].innerHTML = '';
-      drawPlot(arrayOfDataLE, 'Load-Extension');
+      arrayOfDataLS = arrayOfDataLS_raw;
+      arrayOfDataLE = arrayOfDataLE_raw;
+      //drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703])
+      drawPlot(arrayOfDataLS_raw, 'Load-Stroke');
+      drawPlot(arrayOfDataLE_raw, 'Load-Extension');
     });
 
     //Export All Data to .txt file
