@@ -13,6 +13,7 @@ body {
 .container {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   max-width: 1100px;
   margin: 20px auto;
   background-color: white;
@@ -43,23 +44,19 @@ h2 {
 
 .ls {
   text-align: center;
-  margin: 5px;
 }
 
 .ls > * {
   padding: 10px;
-  margin: 5px;
 }
 
 .le > * {
   padding: 10px;
-  margin: 5px;
 }
 
 
 .le {
   text-align: center;
-  margin: 5px;
 }
 
 /* path {
@@ -255,6 +252,8 @@ input[type=number]::-webkit-outer-spin-button {
 .ls,
 .le {
   display: none;
+  flex-grow: 1;
+  min-width: 200px;
 }
 
 .loadFile_info {
