@@ -295,7 +295,19 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #scale-value {
-  font-size: 10px;
+  font-size: 18px;
+}
+
+.approx-value {
+  padding: 5px;
+  /* margin: 0 40px; */
+  font-size: 18px;
+  flex-grow: 1;
+}
+
+.btn_minus,
+.btn_plus {
+  margin: 0 20px;
 }
 
 .loadFile_info {

@@ -108,7 +108,7 @@ export default function drawPlot(data, name, xScaleArg) {
       .extent([[0,0],[width,height]])//view point size
       .on("zoom", function() {
         zoomed();
-        console.log(zoomed());
+        // console.log(zoomed());
       });
   svg.append("rect")
   .attr("class","zoom")

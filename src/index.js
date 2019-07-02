@@ -250,7 +250,6 @@ fileInput.addEventListener('change', function(e) {
 
     //Cancel Scale Operation
     document.getElementById('cancelScale').addEventListener('click', () => {
-      console.log('siema');
       graph[0].innerHTML = '';
       graph[1].innerHTML = '';
       arrayOfDataLS = arrayOfDataLS_raw;
@@ -259,6 +258,31 @@ fileInput.addEventListener('change', function(e) {
       drawPlot(arrayOfDataLS_raw, 'Load-Stroke');
       drawPlot(arrayOfDataLE_raw, 'Load-Extension');
     });
+
+    //ApproximationLS
+    document.querySelector('#btn_approximationLS_minus').addEventListener('click', () => {
+      const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
+      console.log(approxStep);
+      //Move pointer
+      
+    });
+
+    document.querySelector('#btn_approximationLS_plus').addEventListener('click', () => {
+      const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
+      console.log(approxStep);
+    });
+
+    //ApproximationLE
+    document.querySelector('#btn_approximationLE_minus').addEventListener('click', () => {
+      const approxStep = parseFloat(document.getElementById('approx-value-LE').value);
+      console.log(approxStep);
+    });
+
+    document.querySelector('#btn_approximationLE_plus').addEventListener('click', () => {
+      const approxStep = parseFloat(document.getElementById('approx-value-LE').value);
+      console.log(approxStep);
+    });
+
 
     //Export All Data to .txt file
     document.querySelector('.exportData').addEventListener('click', () => {
