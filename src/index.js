@@ -263,8 +263,16 @@ fileInput.addEventListener('change', function(e) {
     document.querySelector('#btn_approximationLS_minus').addEventListener('click', () => {
       const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
       console.log(approxStep);
-      //Move pointer
+      console.log(arrayOfDataLS[0], arrayOfDataLS[1]);
       
+      arrayOfDataLS.unshift([-57.79, 0]);
+      arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
+      console.log(arrayOfDataLS);
+      graph[0].innerHTML = '';
+      //drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703]);
+      drawPlot(arrayOfDataLS, 'Load-Stroke');
+      //Move pointer
+
     });
 
     document.querySelector('#btn_approximationLS_plus').addEventListener('click', () => {
