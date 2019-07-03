@@ -259,25 +259,69 @@ fileInput.addEventListener('change', function(e) {
       drawPlot(arrayOfDataLE_raw, 'Load-Extension');
     });
 
-    //ApproximationLS
+    //ApproximationLS - minus
     document.querySelector('#btn_approximationLS_minus').addEventListener('click', () => {
       const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
       console.log(approxStep);
       console.log(arrayOfDataLS[0], arrayOfDataLS[1]);
       
-      arrayOfDataLS.unshift([-57.79, 0]);
-      arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
+      //arrayOfDataLS.unshift([-57.79, 0]);
+      if(arrayOfDataLS[0][1] === 0) {
+        arrayOfDataLS.shift();
+        arrayOfDataLS.unshift([(arrayOfDataLS[0][0] - approxStep), 0]);
+      } else {
+        arrayOfDataLS.unshift([(arrayOfDataLS[0][0] - approxStep), 0]);
+      }
+
+      //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
       console.log(arrayOfDataLS);
       graph[0].innerHTML = '';
-      //drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703]);
-      drawPlot(arrayOfDataLS, 'Load-Stroke');
+      drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703]);
+      //drawPlot(arrayOfDataLS, 'Load-Stroke');
       //Move pointer
+    });
 
+    //ApproximationLS - plus
+    document.querySelector('#btn_approximationLS_plus').addEventListener('click', () => {
+      const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
+      console.log(approxStep);
+      console.log('BEFORE', arrayOfDataLS[0], arrayOfDataLS[1]);
+      
+      //arrayOfDataLS.unshift([-57.79, 0]);
+      if(arrayOfDataLS[0][1] === 0) {
+        arrayOfDataLS.shift();
+        arrayOfDataLS.unshift([arrayOfDataLS[0][0], 0]);
+        //arrayOfDataLS.unshift([(arrayOfDataLS[0][0] + approxStep), 0]);
+        console.log(arrayOfDataLS[0]);
+        console.log('TEST 1');
+      } else {
+        //arrayOfDataLS.unshift([(arrayOfDataLS[0][0] + approxStep), 0]);
+        //arrayOfDataLS.unshift([arrayOfDataLS[0][0], 0]);
+        arrayOfDataLS.unshift([-57.5, 0]);
+        console.log('TEST 2');
+      }
+      console.log('AFTER', arrayOfDataLS[0], arrayOfDataLS[1]);
+
+      //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
+      //console.log(arrayOfDataLS);
+      graph[0].innerHTML = '';
+      drawPlot(arrayOfDataLS, 'Load-Stroke', [-58.313, -57.3494177111703]);
+      //drawPlot(arrayOfDataLS, 'Load-Stroke');
+      //Move pointer
     });
 
     document.querySelector('#btn_approximationLS_plus').addEventListener('click', () => {
       const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
       console.log(approxStep);
+    });
+
+    //ApproximationAcceptLS
+    document.getElementById('approxAcceptLS').addEventListener('click', () => {
+      const firstX_LS = arrayOfDataLS[0][0]
+      arrayOfDataLS.map(e => e[0] = e[0] + Math.abs(firstX_LS));
+      //arrayOfData.map(e => e.load = e.load + Math.abs(firstX_LS));
+      graph[0].innerHTML = '';
+      drawPlot(arrayOfDataLS, 'Load-Stroke');
     });
 
     //ApproximationLE
@@ -296,8 +340,9 @@ fileInput.addEventListener('change', function(e) {
     document.querySelector('.exportData').addEventListener('click', () => {
 
       let lines = ['Load      Stroke      Extension     Command     Time'];
-      console.log('Original Array: ', arrayOfData_raw);
-      console.log('Edited Array: ', arrayOfData);
+      //console.log('Original Array: ', arrayOfData_raw);
+      //console.log('Edited Array: ', arrayOfData);
+      console.log('ArrayLS_Data: ', arrayOfDataLS);
 
       const exportDataset = arrayOfData.map(element => {
         //Make a string with equal spacing... 
@@ -311,7 +356,9 @@ fileInput.addEventListener('change', function(e) {
         // lines.push(tableOfData);
         lines.push(`${element.load}     ${element.stroke}     ${element.extension}      ${element.command}      ${element.time}`);
       });
-      exportData(lines.join('\n'), 'Data.txt');
+      
+      //!!!_Prevent Download_!!!
+      //exportData(lines.join('\n'), 'Data.txt');
     })
     /*
     document.querySelector('.exportLS_data').addEventListener('click', () => {
