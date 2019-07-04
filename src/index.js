@@ -259,18 +259,18 @@ fileInput.addEventListener('change', function(e) {
       drawPlot(arrayOfDataLE_raw, 'Load-Extension');
     });
 
-    //ApproximationLS - minus
-    document.querySelector('#btn_approximationLS_minus').addEventListener('click', () => {
-      const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
-      console.log(approxStep);
+    //extrLS - minus
+    document.querySelector('#btn_extrLS_minus').addEventListener('click', () => {
+      const extrStep = parseFloat(document.getElementById('extr-value-LS').value);
+      console.log(extrStep);
       console.log(arrayOfDataLS[0], arrayOfDataLS[1]);
       
       //arrayOfDataLS.unshift([-57.79, 0]);
       if(arrayOfDataLS[0][1] === 0) {
         arrayOfDataLS.shift();
-        arrayOfDataLS.unshift([(arrayOfDataLS[0][0] - approxStep), 0]);
+        arrayOfDataLS.unshift([(arrayOfDataLS[0][0] - extrStep), 0]);
       } else {
-        arrayOfDataLS.unshift([(arrayOfDataLS[0][0] - approxStep), 0]);
+        arrayOfDataLS.unshift([(arrayOfDataLS[0][0] - extrStep), 0]);
       }
 
       //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
@@ -281,21 +281,21 @@ fileInput.addEventListener('change', function(e) {
       //Move pointer
     });
 
-    //ApproximationLS - plus
-    document.querySelector('#btn_approximationLS_plus').addEventListener('click', () => {
-      const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
-      console.log(approxStep);
+    //extrLS - plus
+    document.querySelector('#btn_extrLS_plus').addEventListener('click', () => {
+      const extrStep = parseFloat(document.getElementById('extr-value-LS').value);
+      console.log(extrStep);
       console.log('BEFORE', arrayOfDataLS[0], arrayOfDataLS[1]);
       
       //arrayOfDataLS.unshift([-57.79, 0]);
       if(arrayOfDataLS[0][1] === 0) {
         arrayOfDataLS.shift();
         arrayOfDataLS.unshift([arrayOfDataLS[0][0], 0]);
-        //arrayOfDataLS.unshift([(arrayOfDataLS[0][0] + approxStep), 0]);
+        //arrayOfDataLS.unshift([(arrayOfDataLS[0][0] + extrStep), 0]);
         console.log(arrayOfDataLS[0]);
         console.log('TEST 1');
       } else {
-        //arrayOfDataLS.unshift([(arrayOfDataLS[0][0] + approxStep), 0]);
+        //arrayOfDataLS.unshift([(arrayOfDataLS[0][0] + extrStep), 0]);
         //arrayOfDataLS.unshift([arrayOfDataLS[0][0], 0]);
         arrayOfDataLS.unshift([-57.5, 0]);
         console.log('TEST 2');
@@ -310,13 +310,13 @@ fileInput.addEventListener('change', function(e) {
       //Move pointer
     });
 
-    document.querySelector('#btn_approximationLS_plus').addEventListener('click', () => {
-      const approxStep = parseFloat(document.getElementById('approx-value-LS').value);
-      console.log(approxStep);
+    document.querySelector('#btn_extrLS_plus').addEventListener('click', () => {
+      const extrStep = parseFloat(document.getElementById('extr-value-LS').value);
+      console.log(extrStep);
     });
 
-    //ApproximationAcceptLS
-    document.getElementById('approxAcceptLS').addEventListener('click', () => {
+    //extrAcceptLS
+    document.getElementById('extrAcceptLS').addEventListener('click', () => {
       const firstX_LS = arrayOfDataLS[0][0]
       arrayOfDataLS.map(e => e[0] = e[0] + Math.abs(firstX_LS));
       //arrayOfData.map(e => e.load = e.load + Math.abs(firstX_LS));
@@ -324,15 +324,15 @@ fileInput.addEventListener('change', function(e) {
       drawPlot(arrayOfDataLS, 'Load-Stroke');
     });
 
-    //ApproximationLE
-    document.querySelector('#btn_approximationLE_minus').addEventListener('click', () => {
-      const approxStep = parseFloat(document.getElementById('approx-value-LE').value);
-      console.log(approxStep);
+    //extrLE
+    document.querySelector('#btn_extrLE_minus').addEventListener('click', () => {
+      const extrStep = parseFloat(document.getElementById('extr-value-LE').value);
+      console.log(extrStep);
     });
 
-    document.querySelector('#btn_approximationLE_plus').addEventListener('click', () => {
-      const approxStep = parseFloat(document.getElementById('approx-value-LE').value);
-      console.log(approxStep);
+    document.querySelector('#btn_extrLE_plus').addEventListener('click', () => {
+      const extrStep = parseFloat(document.getElementById('extr-value-LE').value);
+      console.log(extrStep);
     });
 
 
