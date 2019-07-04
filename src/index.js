@@ -125,7 +125,8 @@ fileInput.addEventListener('change', function(e) {
 
   var reader = new FileReader();
   reader.onload = function(){
-
+    //Hide file read from DOM
+    document.getElementById('input').style.display = 'none';
     //console.log('READER: ', reader);
     var text = reader.result; //String from input file
     const data = splitText(text)[0];
