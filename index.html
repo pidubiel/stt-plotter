@@ -10,15 +10,23 @@
 </head>
 <body>
     <input id="input" class="btn" type='file' accept='text/plain'><br>
-    <div class="scale-block block">
+    <div class="scale-block">
       <div class="scale">
         <button class="btn btn__showAll showFullPlot">Pokaz cały wykres</button>
         <!-- <input type="text" value="0" min="0" max="1" id="scaleY_LS" maxlength=3> -->
         <p>Skalowanie:</p>
+        <select name="select-scale" id="select-scale">
+          <option value="Load">Load</option>
+          <option value="Stroke">Stroke</option>
+          <option value="Extension">Extension</option>
+          <option value="Command">Command</option>
+          <option value="Time">Time</option>
+        </select>
         <input type="number" id="scale-value" name="scale-value"
                 min="0" max="2" step="0.1" value="1">
         <button class='btn btn__accept acceptScale btn__accept-green'>Zatwierdź</button>
         <button class='btn btn__undo btn__cancel-red' id="cancelScale">Cofnij</button>
+        <button class="btn btn__export exportData">Eksportuj Dane</button>
 
       </div>
     </div>
@@ -133,7 +141,6 @@
       </div> -->
   </div>
   </div>
-  <button class="btn btn__export exportData">Eksportuj Dane</button>
   <button class="back">Cofnij</button>
   <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
   <!-- <script src="./src/button.js"></script> -->

@@ -226,10 +226,27 @@ fileInput.addEventListener('change', function(e) {
 
     //Scale All listener
     document.querySelector('.acceptScale').addEventListener('click', () => {
+        const selectScale = document.getElementById('select-scale').value; 
         if(!canceledOnce) {
           //Get value of scale
           const scaleValue = parseFloat(document.getElementById('scale-value').value);
           //TODO: Modify arrayOfData: 
+          if(selectScale === "Load") {
+            console.log('LOAD!!!', scaleValue);
+            //Rescale load
+          } else if (selectScale === "Stroke") {
+            console.log('STROKE: ', scaleValue);
+            //Rescale stroke
+          } else if (selectScale === "Extension") {
+            console.log('EXTENSION: ', scaleValue);
+            //Rescale extension
+          } else if (selectScale === "Command") {
+            console.log('COMMAND: ', scaleValue);
+            //Rescale command
+          } else if (selectScale === "Time") {
+            console.log('TIME: ', scaleValue);
+            //Rescale time
+          }
           arrayOfData.map(e => e.load = e.load + scaleValue * e.load);
           arrayOfData.map(e => e.extension = e.extension + scaleValue * e.extension);
           //console.log(arrayOfDataLS[0]);

@@ -253,6 +253,7 @@ input[type=number]::-webkit-outer-spin-button {
 .scale-block {
   width: 800px;
   display: none;
+  margin: 0 auto;
 }
 
 
