@@ -54,7 +54,6 @@ h2 {
   padding: 10px;
 }
 
-
 .le {
   text-align: center;
 }
@@ -65,7 +64,8 @@ h2 {
   fill: none;
 } */
 
-.axis path, .axis line {
+.axis path,
+.axis line {
   fill: none;
   stroke: grey;
   stroke-width: 1;
@@ -86,16 +86,17 @@ h2 {
   stroke: rgb(37, 37, 37);
   stroke-width: 2px;
 }
-.tick line{
+.tick line {
   opacity: 0.2;
 }
 .zoom {
   cursor: move;
   fill: none;
   pointer-events: all;
-}  
+}
 
-#cutLS, #cutLE {
+#cutLS,
+#cutLE {
   font-size: 20px;
 }
 
@@ -185,7 +186,7 @@ input[type=number]::-webkit-outer-spin-button {
   content: "\002212";
   font-size: 35px;
   line-height: 38px;
-  color: 'red';
+  color: "red";
   font-weight: bold;
 }
 .number-spinner .ns-btn .icon-plus:after {
@@ -225,7 +226,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .btn__showAll {
-  width: 140px;
+  width: 120px;
 }
 
 .block {
@@ -256,7 +257,6 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0 auto;
 }
 
-
 .btn__accept {
   width: 80px;
 }
@@ -266,9 +266,9 @@ input[type=number]::-webkit-outer-spin-button {
   width: 80px;
 }
 
-
 .btn__export {
   padding: 10px;
+  width: 110px;
   background-color: #049e5e;
   color: white;
   display: none;
@@ -297,6 +297,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 #scale-value {
   font-size: 18px;
+  padding: 7px;
+  border-radius: 3px;
+  border: none;
 }
 
 .extr-value {
@@ -316,4 +319,11 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: center;
   margin: 0 auto;
   padding: 50px;
+}
+
+#select-scale {
+  width: 100px;
+  height: 35px;
+  border: none;
+  background-color: #fff;
 }
