@@ -322,8 +322,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #select-scale {
+  -webkit-appearance: none;
+  appearance: none;
   width: 100px;
   height: 35px;
   border: none;
+  border-radius: 3px;
   background-color: #fff;
 }
