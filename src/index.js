@@ -411,13 +411,13 @@ fileInput.addEventListener(
         const arrayOfData_LE_copy = [...arrayOfDataLE];
 
         arrayOfData_LS_copy.forEach(el => {
-          el[0] = parseFloat(el[0].toFixed(3)); //stroke
-          el[1] = parseFloat(el[1].toFixed(3)); //load
+          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
+          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
         });
 
         arrayOfData_LE_copy.forEach(el => {
-          el[0] = parseFloat(el[0].toFixed(3)); //extension
-          el[1] = parseFloat(el[1].toFixed(3)); //load
+          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //extension
+          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
         });
 
         console.log("ArrayLS_Data_COPY: ", arrayOfData_LS_copy);
@@ -441,7 +441,7 @@ fileInput.addEventListener(
         });
 
         //!!!_Prevent Download_!!!
-        exportData(lines.join("\n"), "Data.txt");
+        //exportData(lines.join("\n"), "Data.txt");
       });
       /*
     document.querySelector('.exportLS_data').addEventListener('click', () => {
