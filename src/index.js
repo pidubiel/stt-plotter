@@ -67,6 +67,9 @@ let cuttedLS_E = 0;
 let cuttedLE_B = 0;
 let cuttedLE_E = 0;
 
+let constraintsLS = [];
+let constraintsLE = [];
+
 //const reset = document.querySelector('.reset');
 const graph = document.querySelectorAll(".plot");
 
@@ -80,7 +83,7 @@ function cutData(plotName, position, amount) {
     graph[0].innerHTML = "";
     graph[1].innerHTML = "";
     graph.innerHTML = "";
-    drawPlot(arrayOfDataLS, "Load-Stroke", [-58.313, -57.3494177111703]);
+    drawPlot(arrayOfDataLS, "Load-Stroke", constraintsLS);
     drawPlot(arrayOfDataLE, "Load-Extension");
     //console.log(arrayOfDataLS.length);
   } else if (plotName == "ls" && position == "end") {
@@ -107,7 +110,9 @@ function cutData(plotName, position, amount) {
     graph.innerHTML = "";
     //drawPlot(arrayOfDataLS, 'Load-Stroke');
     //drawPlot(arrayOfDataLS, 'Load-Extension', [-0.049, -0.01264400659066603]);
-    drawPlot(arrayOfDataLE, "Load-Extension", [-0.049, 0]);
+
+    console.log(constraintsLE);
+    drawPlot(arrayOfDataLE, "Load-Extension", constraintsLE);
     //drawPlot(arrayOfDataLE, 'Load-Extension');
   } else if (plotName == "le" && position == "end") {
     for (
@@ -164,10 +169,32 @@ fileInput.addEventListener(
         arrayOfDataLE.push([arrayOfData[i].extension, arrayOfData[i].load]);
         arrayOfDataLE_raw.push([arrayOfData[i].extension, arrayOfData[i].load]);
       }
+
+      const findMinMaxStroke = arrayLS => {
+        const newArray = JSON.parse(JSON.stringify(arrayLS));
+        newArray.forEach(element => (element.length = 1));
+        const min = Math.min(...newArray.flat());
+        const max = Math.max(...newArray.flat());
+        const range = min - max;
+        console.log("MIN/MAX: ", min, max);
+        console.log("RANGE: ", Math.abs(range));
+        //console.log("constraint MAX!: ", -(-min + range / 8));
+        return [min, -(-min + range / 8)];
+      };
+      console.log("CONSTRAINTS: ", findMinMaxStroke(arrayOfDataLS));
+
+      constraintsLE[0] = arrayOfDataLE.slice(0, 1)[0][0];
+      constraintsLE[1] = constraintsLE[0] + 0.1 * Math.abs(constraintsLE[0]);
+
+      constraintsLS = findMinMaxStroke(arrayOfDataLS);
+      //console.log("array: ", arrayOfData);
+      //console.log("constraints LE: ", constraintsLE);
       //arrayOfDataLS.map(e => e.reverse());
       //arrayOfDataLE.map(e => e.reverse());
       //arrayOfDataLE.map((e,i) => e[2] = i);
       //arrayOfDataLE.sort();
+
+      //console.log("arrayOfDataLS", arrayOfDataLS);
 
       //console.log('ArrayOfData: ', arrayOfData);
       //console.log('ArrayOfDataLS: ', arrayOfDataLS);
@@ -325,7 +352,7 @@ fileInput.addEventListener(
           //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
           console.log(arrayOfDataLS);
           graph[0].innerHTML = "";
-          drawPlot(arrayOfDataLS, "Load-Stroke", [-58.313, -57.3494177111703]);
+          drawPlot(arrayOfDataLS, "Load-Stroke", constraintsLS);
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
           //Move pointer
         });
@@ -358,7 +385,7 @@ fileInput.addEventListener(
           //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
           //console.log(arrayOfDataLS);
           graph[0].innerHTML = "";
-          drawPlot(arrayOfDataLS, "Load-Stroke", [-58.313, -57.3494177111703]);
+          drawPlot(arrayOfDataLS, "Load-Stroke", constraintsLS);
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
           //Move pointer
         });
