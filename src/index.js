@@ -405,7 +405,23 @@ fileInput.addEventListener(
         let lines = ["Load      Stroke      Extension     Command     Time"];
         //console.log('Original Array: ', arrayOfData_raw);
         //console.log('Edited Array: ', arrayOfData);
-        console.log("ArrayLS_Data: ", arrayOfDataLS);
+        //console.log("ArrayLS_Data: ", arrayOfDataLS);
+
+        const arrayOfData_LS_copy = [...arrayOfDataLS];
+        const arrayOfData_LE_copy = [...arrayOfDataLE];
+
+        arrayOfData_LS_copy.forEach(el => {
+          el[0] = parseFloat(el[0].toFixed(3)); //stroke
+          el[1] = parseFloat(el[1].toFixed(3)); //load
+        });
+
+        arrayOfData_LE_copy.forEach(el => {
+          el[0] = parseFloat(el[0].toFixed(3)); //extension
+          el[1] = parseFloat(el[1].toFixed(3)); //load
+        });
+
+        console.log("ArrayLS_Data_COPY: ", arrayOfData_LS_copy);
+        console.log("ArrayLE_Data_COPY: ", arrayOfData_LE_copy);
 
         const exportDataset = arrayOfData.map(element => {
           //Make a string with equal spacing...
@@ -425,7 +441,7 @@ fileInput.addEventListener(
         });
 
         //!!!_Prevent Download_!!!
-        //exportData(lines.join('\n'), 'Data.txt');
+        exportData(lines.join("\n"), "Data.txt");
       });
       /*
     document.querySelector('.exportLS_data').addEventListener('click', () => {
