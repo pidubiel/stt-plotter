@@ -301,8 +301,10 @@ input[type=number]::-webkit-outer-spin-button {
 .btn__export {
   padding: 10px;
   width: 110px;
-  background-color: #049e5e;
-  color: white;
+  background-color: transparent;
+  color: #049e5e;
+  font-weight: 600;
+  border: 1px solid #049e5e;
   display: none;
 }
 
@@ -328,6 +330,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #scale-value {
+  max-width: 40px;
   font-size: 18px;
   padding: 7px;
   border-radius: 3px;
@@ -335,6 +338,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .extr-value {
+  max-width: 70px;
   padding: 4px;
   margin: 0 10px;
   font-size: 18px;
