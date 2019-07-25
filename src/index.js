@@ -99,7 +99,7 @@ function cutData(plotName, position, amount) {
       graph[0].innerHTML = "";
       graph[1].innerHTML = "";
       graph.innerHTML = "";
-      drawPlot(arrayOfDataLS, "Load-Stroke", [constraintsLS[0], -59.6]);
+      drawPlot(arrayOfDataLS, "Load-Stroke");
       drawPlot(arrayOfDataLE, "Load-Extension");
     }
 
@@ -128,14 +128,16 @@ function cutData(plotName, position, amount) {
     //graph[0].innerHTML = '';
     graph[1].innerHTML = "";
     graph.innerHTML = "";
-    //drawPlot(arrayOfDataLS, 'Load-Stroke');
-    //drawPlot(arrayOfDataLS, 'Load-Extension', [-0.049, -0.01264400659066603]);
 
-    console.log("CONSTRAINTS_LE: ", constraintsLE[0], right_constraint_LE);
-    drawPlot(arrayOfDataLE, "Load-Extension", [
-      constraintsLE[0],
-      right_constraint_LE
-    ]);
+    if (right_constraint_LE) {
+      drawPlot(arrayOfDataLE, "Load-Extension", [
+        constraintsLE[0],
+        right_constraint_LE
+      ]);
+    } else {
+      drawPlot(arrayOfDataLE, "Load-Extension");
+    }
+
     //drawPlot(arrayOfDataLE, 'Load-Extension');
   } else if (plotName == "le" && position == "end") {
     for (

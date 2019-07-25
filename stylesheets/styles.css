@@ -11,6 +11,7 @@ body {
 }
 
 .container {
+  position: relative;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -20,6 +21,22 @@ body {
   /* padding: 50px 0 50px 0; */
   padding: 20px;
   border-radius: 4px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.pop_up {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  border-radius: 3px;
+  width: 800px;
+  height: 500px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -220,9 +237,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .btn__cancel {
-  padding: 13px;
-  width: 150px;
-  margin-top: 10px;
+  padding: 10px 0;
+  width: 136px;
+  margin: 0 10px;
 }
 
 .btn__showAll {
@@ -263,7 +280,22 @@ input[type=number]::-webkit-outer-spin-button {
 
 .btn-extr {
   padding: 9px;
+  margin: 0 10px;
   width: 80px;
+}
+
+.trim_options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.right_constraint {
+  padding: 4px;
+  font-size: 18px;
+  width: 80px;
+  margin: 0 10px;
 }
 
 .btn__export {
@@ -303,15 +335,15 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .extr-value {
-  padding: 5px;
-  /* margin: 0 40px; */
+  padding: 4px;
+  margin: 0 10px;
   font-size: 18px;
   flex-grow: 1;
 }
 
 .btn_minus,
 .btn_plus {
-  margin: 0 20px;
+  margin: 0 10px;
   font-size: 24px;
 }
 
