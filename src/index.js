@@ -70,21 +70,39 @@ let cuttedLE_E = 0;
 let constraintsLS = [];
 let constraintsLE = [];
 
+const right_constraint_LE =
+  document.getElementById("right_constraint_LE").value * 1;
+
 //const reset = document.querySelector('.reset');
 const graph = document.querySelectorAll(".plot");
 
 function cutData(plotName, position, amount) {
   if (plotName == "ls" && position == "begin") {
+    const right_constraint_LS =
+      document.getElementById("right_constraint_LS").value * 1;
     arrayOfDataLS = arrayOfDataLS.slice(amount, arrayOfDataLS.length);
     for (let i = 0; i < cuttedLS_B; i++) {
       arrayOfData[i].stroke = 0;
     }
     //console.log(arrayOfData);
-    graph[0].innerHTML = "";
-    graph[1].innerHTML = "";
-    graph.innerHTML = "";
-    drawPlot(arrayOfDataLS, "Load-Stroke", constraintsLS);
-    drawPlot(arrayOfDataLE, "Load-Extension");
+    console.log("right_Constraint_LS: ", right_constraint_LS);
+    if (right_constraint_LS) {
+      graph[0].innerHTML = "";
+      graph[1].innerHTML = "";
+      graph.innerHTML = "";
+      drawPlot(arrayOfDataLS, "Load-Stroke", [
+        constraintsLS[0],
+        right_constraint_LS
+      ]);
+      drawPlot(arrayOfDataLE, "Load-Extension");
+    } else {
+      graph[0].innerHTML = "";
+      graph[1].innerHTML = "";
+      graph.innerHTML = "";
+      drawPlot(arrayOfDataLS, "Load-Stroke", [constraintsLS[0], -59.6]);
+      drawPlot(arrayOfDataLE, "Load-Extension");
+    }
+
     //console.log(arrayOfDataLS.length);
   } else if (plotName == "ls" && position == "end") {
     for (
@@ -101,6 +119,8 @@ function cutData(plotName, position, amount) {
     drawPlot(arrayOfDataLS, "Load-Stroke");
     drawPlot(arrayOfDataLE, "Load-Extension");
   } else if (plotName == "le" && position == "begin") {
+    const right_constraint_LE =
+      document.getElementById("right_constraint_LE").value * 1;
     for (let i = 0; i < cuttedLE_B; i++) {
       arrayOfData[i].extension = 0;
     }
@@ -111,8 +131,11 @@ function cutData(plotName, position, amount) {
     //drawPlot(arrayOfDataLS, 'Load-Stroke');
     //drawPlot(arrayOfDataLS, 'Load-Extension', [-0.049, -0.01264400659066603]);
 
-    console.log(constraintsLE);
-    drawPlot(arrayOfDataLE, "Load-Extension", constraintsLE);
+    console.log("CONSTRAINTS_LE: ", constraintsLE[0], right_constraint_LE);
+    drawPlot(arrayOfDataLE, "Load-Extension", [
+      constraintsLE[0],
+      right_constraint_LE
+    ]);
     //drawPlot(arrayOfDataLE, 'Load-Extension');
   } else if (plotName == "le" && position == "end") {
     for (
@@ -181,12 +204,14 @@ fileInput.addEventListener(
         //console.log("constraint MAX!: ", -(-min + range / 8));
         return [min, -(-min + range / 8)];
       };
-      console.log("CONSTRAINTS: ", findMinMaxStroke(arrayOfDataLS));
+      console.log("CONSTRAINTS LS: ", findMinMaxStroke(arrayOfDataLS));
+      console.log("CONSTRAINTS LE: ", findMinMaxStroke(arrayOfDataLE));
 
-      constraintsLE[0] = arrayOfDataLE.slice(0, 1)[0][0];
-      constraintsLE[1] = constraintsLE[0] + 0.1 * Math.abs(constraintsLE[0]);
+      // constraintsLE[0] = arrayOfDataLE.slice(0, 1)[0][0];
+      // constraintsLE[1] = constraintsLE[0] + 0.1 * Math.abs(constraintsLE[0]);
 
       constraintsLS = findMinMaxStroke(arrayOfDataLS);
+      constraintsLE = findMinMaxStroke(arrayOfDataLE);
       //console.log("array: ", arrayOfData);
       //console.log("constraints LE: ", constraintsLE);
       //arrayOfDataLS.map(e => e.reverse());
@@ -335,6 +360,8 @@ fileInput.addEventListener(
       document
         .querySelector("#btn_extrLS_minus")
         .addEventListener("click", () => {
+          const right_constraint_LS =
+            document.getElementById("right_constraint_LS").value * 1;
           const extrStep = parseFloat(
             document.getElementById("extr-value-LS").value
           );
@@ -352,7 +379,10 @@ fileInput.addEventListener(
           //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
           console.log(arrayOfDataLS);
           graph[0].innerHTML = "";
-          drawPlot(arrayOfDataLS, "Load-Stroke", constraintsLS);
+          drawPlot(arrayOfDataLS, "Load-Stroke", [
+            constraintsLS[0],
+            right_constraint_LS
+          ]);
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
           //Move pointer
         });
@@ -361,6 +391,8 @@ fileInput.addEventListener(
       document
         .querySelector("#btn_extrLS_plus")
         .addEventListener("click", () => {
+          const right_constraint_LS =
+            document.getElementById("right_constraint_LS").value * 1;
           const extrStep = parseFloat(
             document.getElementById("extr-value-LS").value
           );
@@ -385,7 +417,10 @@ fileInput.addEventListener(
           //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
           //console.log(arrayOfDataLS);
           graph[0].innerHTML = "";
-          drawPlot(arrayOfDataLS, "Load-Stroke", constraintsLS);
+          drawPlot(arrayOfDataLS, "Load-Stroke", [
+            constraintsLS[0],
+            right_constraint_LS
+          ]);
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
           //Move pointer
         });
@@ -412,11 +447,42 @@ fileInput.addEventListener(
       document
         .querySelector("#btn_extrLE_minus")
         .addEventListener("click", () => {
+          const right_constraint_LE =
+            document.getElementById("right_constraint_LE").value * 1;
           const extrStep = parseFloat(
             document.getElementById("extr-value-LE").value
           );
           console.log(extrStep);
+          console.log(arrayOfDataLE[0], arrayOfDataLE[1]);
+
+          //arrayOfDataLS.unshift([-57.79, 0]);
+          if (arrayOfDataLE[0][1] === 0) {
+            arrayOfDataLE.shift();
+            arrayOfDataLE.unshift([arrayOfDataLE[0][0] - extrStep, 0]);
+          } else {
+            arrayOfDataLE.unshift([arrayOfDataLE[0][0] - extrStep, 0]);
+          }
+
+          //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
+          console.log(arrayOfDataLE);
+          graph[1].innerHTML = "";
+          //graph.innerHTML = "";
+          drawPlot(arrayOfDataLE, "Load-Extension", [
+            constraintsLE[0],
+            right_constraint_LE
+          ]);
+          //drawPlot(arrayOfDataLS, 'Load-Stroke');
+          //Move pointer
         });
+
+      //extrAcceptLE
+      document.getElementById("extrAcceptLE").addEventListener("click", () => {
+        const firstX_LE = arrayOfDataLE[0][0];
+        arrayOfDataLE.map(e => (e[0] = e[0] + Math.abs(firstX_LE)));
+        //arrayOfData.map(e => e.load = e.load + Math.abs(firstX_LS));
+        graph[1].innerHTML = "";
+        drawPlot(arrayOfDataLE, "Load-Extension");
+      });
 
       document
         .querySelector("#btn_extrLE_plus")
@@ -449,6 +515,13 @@ fileInput.addEventListener(
 
         console.log("ArrayLS_Data_COPY: ", arrayOfData_LS_copy);
         console.log("ArrayLE_Data_COPY: ", arrayOfData_LE_copy);
+
+        console.log("Amount Of Cutted Values: ");
+        console.log("---------------------------------------------");
+        console.log("Cutted LS Begin: ", cuttedLS_B);
+        console.log("Cutted LS End: ", cuttedLS_E);
+        console.log("Cutted LE Begin: ", cuttedLE_B);
+        console.log("Cutted LE End: ", cuttedLE_E);
 
         const exportDataset = arrayOfData.map(element => {
           //Make a string with equal spacing...
