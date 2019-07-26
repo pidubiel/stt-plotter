@@ -5,6 +5,12 @@ import parseRecord from "./parseRecord";
 import exportData from "./exportData";
 //import cutData from './cutData'
 
+window.addEventListener("keydown", e => {
+  if (e.keyCode === 82) {
+    location.reload();
+  }
+});
+
 //NUMBER SPINNER-----------------------------------------------------------------------------
 var numberSpinner = (function() {
   $(".number-spinner>.ns-btn>a").click(function() {
@@ -169,6 +175,8 @@ fileInput.addEventListener(
     document.querySelector(".le").style.display = "block";
     document.querySelector(".btn__export").style.display = "inline-block";
     document.querySelector(".scale-block").style.display = "block";
+    document.querySelector("#exportLE").style.display = "inline-block";
+    document.querySelector("#exportLS").style.display = "inline-block";
 
     var reader = new FileReader();
     reader.onload = function() {
@@ -515,8 +523,8 @@ fileInput.addEventListener(
           el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
         });
 
-        console.log("ArrayLS_Data_COPY: ", arrayOfData_LS_copy);
-        console.log("ArrayLE_Data_COPY: ", arrayOfData_LE_copy);
+        console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
+        console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
 
         console.log("Amount Of Cutted Values: ");
         console.log("---------------------------------------------");
@@ -545,41 +553,34 @@ fileInput.addEventListener(
         //!!!_Prevent Download_!!!
         //exportData(lines.join("\n"), "Data.txt");
       });
-      /*
-    document.querySelector('.exportLS_data').addEventListener('click', () => {
-      //console.log(arrayOfDataLS.join('           '));
-      let LS_recordLine = [];
-      //console.log(arrayOfDataLS);
-      for(let i = 0; i < arrayOfDataLS.length - 1; i++) {
-        let load;
-        load = `-${(Math.abs(arrayOfDataLS[i][0]).toPrecision(5)).toString()}`;
-        LS_recordLine.push(arrayOfDataLS[i][1].toPrecision(4) + '          ' + load);
-        //LS_recordLine.push(arrayOfDataLS[i][1] + '          ' + arrayOfDataLS[i][0]);
-      }
-      // const LS_txt = arrayOfDataLS.map(element => {
-
-      // });
-      //console.log(splitText(text)[1].concat(arrayOfDataLS[0]));
-      exportData(splitText(text)[1].concat(LS_recordLine.join('\n')), "Load-Stroke.txt");
-    });
-
-    document.querySelector('.exportLE_data').addEventListener('click', () => {
-      //console.log(arrayOfDataLS.join('           '));
-      let LE_recordLine = [];
-      for(let i = 0; i < arrayOfDataLE.length - 1; i++) {
-        // let load;
-        // load = `-${(Math.abs(arrayOfDataLE[i][0]).toPrecision(4)).toString()}`;
-        //LS_recordLine.push(arrayOfDataLS[i][0] + '          ' + arrayOfDataLS[i][1]);
-        LE_recordLine.push(arrayOfDataLE[i][1] + '                          ' + arrayOfDataLE[i][0]);
-      }
-      //console.log('ArrayLE: ', arrayOfDataLE);
-      // const LS_txt = arrayOfDataLS.map(element => {
-
-      // });
-      //console.log(splitText(text)[1].concat(arrayOfDataLS[0]));
-      exportData(splitText(text)[1].concat(LE_recordLine.join('\n')), "Load-Extension.txt");
-    });
-    */
+      // Export only Load - Stroke
+      document.querySelector("#exportLS").addEventListener("click", () => {
+        let lines = ["Load      Stroke      "];
+        const arrayOfData_LS_copy = [...arrayOfDataLS];
+        arrayOfData_LS_copy.forEach(el => {
+          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
+          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
+        });
+        console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
+        const exportDataset = arrayOfData_LS_copy.map(element => {
+          lines.push(`${element[1]}     ${element[0]}     `);
+        });
+        exportData(lines.join("\n"), "Data_Load_Stroke.txt");
+      });
+      // Export only Load - Extension
+      document.querySelector("#exportLE").addEventListener("click", () => {
+        let lines = ["Load      Extension      "];
+        const arrayOfData_LE_copy = [...arrayOfDataLE];
+        arrayOfData_LE_copy.forEach(el => {
+          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
+          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
+        });
+        console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
+        const exportDataset = arrayOfData_LE_copy.map(element => {
+          lines.push(`${element[1]}     ${element[0]}     `);
+        });
+        exportData(lines.join("\n"), "Data_Load_Extension.txt");
+      });
     };
     reader.readAsText(input.files[0]);
   },
