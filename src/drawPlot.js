@@ -32,17 +32,17 @@ export default function drawPlot(data, name, xScaleArg) {
   if (name == "Load-Stroke") {
     svg
       .append("text")
-      .attr("x", 120)
+      .attr("x", 80)
       .attr("y", 15)
-      .text("Wykres Siły od Przemieszczenia (Load-Stroke)")
+      .text("Wykres Siły od Przemieszczenia (Load [kN] - Stroke [mm])")
       .attr("font-size", "15px")
       .attr("fill", "#000");
   } else {
     svg
       .append("text")
-      .attr("x", 130)
+      .attr("x", 90)
       .attr("y", 15)
-      .text("Wykres Siły od Wydłużenia (Load-Extenstion)")
+      .text("Wykres Siły od Wydłużenia (Load [kN] - Extenstion [mm])")
       .attr("font-size", "15px")
       .attr("fill", "#000");
   }
