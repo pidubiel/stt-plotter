@@ -116,7 +116,7 @@ export default function drawPlot(data, name, xScaleArg) {
     .range([0, height2])
     .domain([
       d3.max(dataset, function(d) {
-        return d[1];
+        return d[1] * 1.04;
       }),
       d3.min(dataset, function(d) {
         return d[1];

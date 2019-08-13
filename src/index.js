@@ -3,6 +3,7 @@ import drawPlot from "./drawPlot";
 import splitText from "./splitText";
 import parseRecord from "./parseRecord";
 import exportData from "./exportData";
+import * as saveSvg from "save-svg-as-png";
 //import cutData from './cutData'
 
 window.addEventListener("keydown", e => {
@@ -588,6 +589,29 @@ fileInput.addEventListener(
         });
         exportData(lines.join("\n"), "Data_Load_Extension.txt");
       });
+      const diagrams = document.querySelectorAll(".plot");
+      for (const diagram of diagrams) {
+        if (diagram.id === "diagram_Load-Stroke") {
+          diagram.addEventListener("click", function() {
+            saveSvg.saveSvgAsPng(this.firstChild, `${diagram.id}.png`, {
+              backgroundColor: "white"
+            });
+          });
+        } else if (diagram.id === "diagram_Load-Extension") {
+          diagram.addEventListener("click", function() {
+            saveSvg.saveSvgAsPng(this.firstChild, `${diagram.id}.png`, {
+              backgroundColor: "white"
+            });
+          });
+        }
+      }
+      // document.querySelector(".plot").addEventListener("click", function(e) {
+      //   console.log(this.firstChild);
+      //   console.log(saveSvg);
+      //   saveSvg.saveSvgAsPng(this.firstChild, "diagram.png", {
+      //     backgroundColor: "white"
+      //   });
+      // });
     };
     reader.readAsText(input.files[0]);
   },
