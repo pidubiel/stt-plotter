@@ -391,7 +391,8 @@ fileInput.addEventListener(
           console.log(arrayOfDataLS);
           graph[0].innerHTML = "";
           drawPlot(arrayOfDataLS, "Load-Stroke", [
-            constraintsLS[0],
+            arrayOfDataLS[0][0],
+            // constraintsLS[0],
             right_constraint_LS
           ]);
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
@@ -475,11 +476,13 @@ fileInput.addEventListener(
           }
 
           //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
-          console.log(arrayOfDataLE);
+          console.log("TEST!!!999", arrayOfDataLE);
+          console.log("TEST!!!1000", constraintsLE);
           graph[1].innerHTML = "";
           //graph.innerHTML = "";
           drawPlot(arrayOfDataLE, "Load-Extension", [
-            constraintsLE[0],
+            arrayOfDataLE[0][0],
+            // constraintsLE[0],
             right_constraint_LE
           ]);
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
@@ -524,15 +527,15 @@ fileInput.addEventListener(
           el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
         });
 
-        console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
-        console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
+        // console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
+        // console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
 
-        console.log("Amount Of Cutted Values: ");
-        console.log("---------------------------------------------");
-        console.log("Cutted LS Begin: ", cuttedLS_B);
-        console.log("Cutted LS End: ", cuttedLS_E);
-        console.log("Cutted LE Begin: ", cuttedLE_B);
-        console.log("Cutted LE End: ", cuttedLE_E);
+        // console.log("Amount Of Cutted Values: ");
+        // console.log("---------------------------------------------");
+        // console.log("Cutted LS Begin: ", cuttedLS_B);
+        // console.log("Cutted LS End: ", cuttedLS_E);
+        // console.log("Cutted LE Begin: ", cuttedLE_B);
+        // console.log("Cutted LE End: ", cuttedLE_E);
 
         const exportDataset = arrayOfData.map(element => {
           //Make a string with equal spacing...
@@ -545,14 +548,12 @@ fileInput.addEventListener(
           // tableOfData.join('');
           // lines.push(tableOfData);
           lines.push(
-            `${element.load}     ${element.stroke}     ${
-              element.extension
-            }      ${element.command}      ${element.time}`
+            `${element.load}     ${element.stroke}     ${element.extension}      ${element.command}      ${element.time}`
           );
         });
 
         //!!!_Prevent Download_!!!
-        //exportData(lines.join("\n"), "Data.txt");
+        exportData(lines.join("\n"), "Data.txt");
       });
       // Export only Load - Stroke
       document.querySelector("#exportLS").addEventListener("click", () => {
