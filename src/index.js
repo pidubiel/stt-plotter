@@ -8,7 +8,7 @@ import * as saveSvg from "save-svg-as-png";
 
 window.addEventListener("keydown", e => {
   if (e.keyCode === 82) {
-    location.reload();
+    location.reload(true);
   }
 });
 
