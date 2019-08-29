@@ -98,7 +98,8 @@ function cutData(plotName, position, amount) {
       graph[1].innerHTML = "";
       graph.innerHTML = "";
       drawPlot(arrayOfDataLS, "Load-Stroke", [
-        constraintsLS[0],
+        arrayOfDataLS[0][0],
+        // constraintsLS[0],
         right_constraint_LS
       ]);
       drawPlot(arrayOfDataLE, "Load-Extension");
@@ -138,7 +139,8 @@ function cutData(plotName, position, amount) {
 
     if (right_constraint_LE) {
       drawPlot(arrayOfDataLE, "Load-Extension", [
-        constraintsLE[0],
+        arrayOfDataLE[0][0],
+        // constraintsLE[0],
         right_constraint_LE
       ]);
     } else {
