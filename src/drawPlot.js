@@ -164,7 +164,10 @@ export default function drawPlot(data, name, xScaleArg) {
 
   //add x and y axis
   var yAxis = d3.axisLeft(yScale).tickSize(-width);
-  var yAxisGroup = focus.append("g").call(yAxis);
+  var yAxisGroup = focus
+    .append("g")
+    .style("font", "13px arial")
+    .call(yAxis);
 
   var xAxis = d3
     .axisBottom(xScale)
@@ -172,6 +175,7 @@ export default function drawPlot(data, name, xScaleArg) {
   var xAxisGroup = focus
     .append("g")
     .call(xAxis)
+    .style("font", "13px arial")
     .attr("transform", "translate(0," + height + ")");
 
   var xAxis2 = d3.axisBottom(xScale2); //no need to create grid

@@ -392,11 +392,20 @@ fileInput.addEventListener(
           //arrayOfDataLS.map(e => e[0] = e[0] + 57.79);
           console.log(arrayOfDataLS);
           graph[0].innerHTML = "";
-          drawPlot(arrayOfDataLS, "Load-Stroke", [
-            arrayOfDataLS[0][0],
-            // constraintsLS[0],
-            right_constraint_LS
-          ]);
+          if (right_constraint_LS === 0) {
+            drawPlot(arrayOfDataLS, "Load-Stroke", [
+              arrayOfDataLS[0][0],
+              // constraintsLS[0],
+              arrayOfDataLS[arrayOfDataLS.length - 1][0]
+            ]);
+          } else {
+            drawPlot(arrayOfDataLS, "Load-Stroke", [
+              arrayOfDataLS[0][0],
+              // constraintsLS[0],
+              right_constraint_LS
+            ]);
+          }
+
           //drawPlot(arrayOfDataLS, 'Load-Stroke');
           //Move pointer
         });
@@ -511,7 +520,7 @@ fileInput.addEventListener(
 
       //Export All Data to .txt file
       document.querySelector(".exportData").addEventListener("click", () => {
-        let lines = ["Load      Stroke      Extension     Command     Time"];
+        let lines = ["Load\tStroke\tExtension\tCommand\tTime"];
         //console.log('Original Array: ', arrayOfData_raw);
         //console.log('Edited Array: ', arrayOfData);
         //console.log("ArrayLS_Data: ", arrayOfDataLS);
@@ -550,7 +559,7 @@ fileInput.addEventListener(
           // tableOfData.join('');
           // lines.push(tableOfData);
           lines.push(
-            `${element.load}     ${element.stroke}     ${element.extension}      ${element.command}      ${element.time}`
+            `${element.load}\t${element.stroke}\t${element.extension}\t${element.command}\t${element.time}`
           );
         });
 
@@ -559,7 +568,7 @@ fileInput.addEventListener(
       });
       // Export only Load - Stroke
       document.querySelector("#exportLS").addEventListener("click", () => {
-        let lines = ["Load      Stroke      "];
+        let lines = ["Load\tStroke\t"];
         const arrayOfData_LS_copy = [...arrayOfDataLS];
         arrayOfData_LS_copy.forEach(el => {
           el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
@@ -567,13 +576,13 @@ fileInput.addEventListener(
         });
         console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
         const exportDataset = arrayOfData_LS_copy.map(element => {
-          lines.push(`${element[1]}     ${element[0]}     `);
+          lines.push(`${element[1]}\t${element[0]}\t`);
         });
         exportData(lines.join("\n"), "Data_Load_Stroke.txt");
       });
       // Export only Load - Extension
       document.querySelector("#exportLE").addEventListener("click", () => {
-        let lines = ["Load      Extension      "];
+        let lines = ["Load\tExtension\t"];
         const arrayOfData_LE_copy = [...arrayOfDataLE];
         arrayOfData_LE_copy.forEach(el => {
           //el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
@@ -588,7 +597,7 @@ fileInput.addEventListener(
         });
         console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
         const exportDataset = arrayOfData_LE_copy.map(element => {
-          lines.push(`${element[1]}     ${element[0]}     `);
+          lines.push(`${element[1]}\t${element[0]}\t`);
         });
         exportData(lines.join("\n"), "Data_Load_Extension.txt");
       });
