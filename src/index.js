@@ -4,6 +4,7 @@ import splitText from "./splitText";
 import parseRecord from "./parseRecord";
 import exportData from "./exportData";
 import * as saveSvg from "save-svg-as-png";
+import numbro from "numbro";
 //import cutData from './cutData'
 
 window.addEventListener("keydown", e => {
@@ -551,17 +552,15 @@ fileInput.addEventListener(
         // console.log("Cutted LE End: ", cuttedLE_E);
 
         const exportDataset = arrayOfData.map(element => {
-          //Make a string with equal spacing...
-          // let tableOfData = [];
-          // tableOfData[0] = element.load;
-          // tableOfData[30] = element.stroke;
-          // tableOfData[60] = element.extension;
-          // tableOfData[90] = element.command;
-          // tableOfData[120] = element.time;
-          // tableOfData.join('');
-          // lines.push(tableOfData);
+          const elementData = {
+            load: numbro(element.load).format("0.000"),
+            stroke: numbro(element.stroke).format("0.000"),
+            extension: numbro(element.extension).format("0.000"),
+            command: numbro(element.command).format("0.000"),
+            time: numbro(element.time).format("0.000")
+          };
           lines.push(
-            `${element.load}\t${element.stroke}\t${element.extension}\t${element.command}\t${element.time}`
+            `${elementData.load}\t${elementData.stroke}\t${elementData.extension}\t${elementData.command}\t${elementData.time}`
           );
         });
 
@@ -578,7 +577,11 @@ fileInput.addEventListener(
         });
         console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
         const exportDataset = arrayOfData_LS_copy.map(element => {
-          lines.push(`${element[1]}\t${element[0]}\t`);
+          lines.push(
+            `${numbro(element[1]).format("0.000")}\t${numbro(element[0]).format(
+              "0.000"
+            )}\t`
+          );
         });
         exportData(lines.join("\n"), "Data_Load_Stroke.txt");
       });
@@ -599,7 +602,11 @@ fileInput.addEventListener(
         });
         console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
         const exportDataset = arrayOfData_LE_copy.map(element => {
-          lines.push(`${element[1]}\t${element[0]}\t`);
+          lines.push(
+            `${numbro(element[1]).format("0.000")}\t${numbro(element[0]).format(
+              "0.000"
+            )}\t`
+          );
         });
         exportData(lines.join("\n"), "Data_Load_Extension.txt");
       });
