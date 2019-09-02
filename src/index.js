@@ -520,7 +520,9 @@ fileInput.addEventListener(
 
       //Export All Data to .txt file
       document.querySelector(".exportData").addEventListener("click", () => {
-        let lines = ["Load\tStroke\tExtension\tCommand\tTime"];
+        let lines = [
+          "Load (kN)\tStroke (mm)\tExtension (mm)\tCommand (%)\tTime (s)"
+        ];
         //console.log('Original Array: ', arrayOfData_raw);
         //console.log('Edited Array: ', arrayOfData);
         //console.log("ArrayLS_Data: ", arrayOfDataLS);
@@ -568,7 +570,7 @@ fileInput.addEventListener(
       });
       // Export only Load - Stroke
       document.querySelector("#exportLS").addEventListener("click", () => {
-        let lines = ["Load\tStroke\t"];
+        let lines = ["Load (kN)\tStroke (mm)\t"];
         const arrayOfData_LS_copy = [...arrayOfDataLS];
         arrayOfData_LS_copy.forEach(el => {
           el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
@@ -582,7 +584,7 @@ fileInput.addEventListener(
       });
       // Export only Load - Extension
       document.querySelector("#exportLE").addEventListener("click", () => {
-        let lines = ["Load\tExtension\t"];
+        let lines = ["Load (kN)\tExtension (mm)\t"];
         const arrayOfData_LE_copy = [...arrayOfDataLE];
         arrayOfData_LE_copy.forEach(el => {
           //el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
