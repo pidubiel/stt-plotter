@@ -531,15 +531,15 @@ fileInput.addEventListener(
         const arrayOfData_LS_copy = [...arrayOfDataLS];
         const arrayOfData_LE_copy = [...arrayOfDataLE];
 
-        arrayOfData_LS_copy.forEach(el => {
-          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
-          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
-        });
+        // arrayOfData_LS_copy.forEach(el => {
+        //   el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
+        //   el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
+        // });
 
-        arrayOfData_LE_copy.forEach(el => {
-          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //extension
-          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
-        });
+        // arrayOfData_LE_copy.forEach(el => {
+        //   el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //extension
+        //   el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
+        // });
 
         // console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
         // console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
@@ -572,8 +572,8 @@ fileInput.addEventListener(
         let lines = ["Load (kN)\tStroke (mm)\t"];
         const arrayOfData_LS_copy = [...arrayOfDataLS];
         arrayOfData_LS_copy.forEach(el => {
-          el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
-          el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
+          el[0] = parseFloat(parseFloat(el[0])); //stroke
+          el[1] = parseFloat(parseFloat(el[1])); //load
         });
         console.log("ArrayLS_Data_Export: ", arrayOfData_LS_copy);
         const exportDataset = arrayOfData_LS_copy.map(element => {
@@ -589,17 +589,17 @@ fileInput.addEventListener(
       document.querySelector("#exportLE").addEventListener("click", () => {
         let lines = ["Load (kN)\tExtension (mm)\t"];
         const arrayOfData_LE_copy = [...arrayOfDataLE];
-        arrayOfData_LE_copy.forEach(el => {
-          //el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
-          //el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
+        // arrayOfData_LE_copy.forEach(el => {
+        //   //el[0] = parseFloat(parseFloat(el[0].toFixed(3)).toPrecision(4)); //stroke
+        //   //el[1] = parseFloat(parseFloat(el[1].toFixed(3)).toPrecision(4)); //load
 
-          el[0] = Number(
-            parseFloat(parseFloat(Number(el[0]).toFixed(3)).toPrecision(4))
-          ).toFixed(3); //stroke
-          el[1] = Number(
-            parseFloat(parseFloat(Number(el[1]).toFixed(3)).toPrecision(4))
-          ).toFixed(3); //load
-        });
+        //   el[0] = Number(
+        //     parseFloat(parseFloat(Number(el[0]).toFixed(3)).toPrecision(4))
+        //   ).toFixed(3); //stroke
+        //   el[1] = Number(
+        //     parseFloat(parseFloat(Number(el[1]).toFixed(3)).toPrecision(4))
+        //   ).toFixed(3); //load
+        // });
         console.log("ArrayLE_Data_Export: ", arrayOfData_LE_copy);
         const exportDataset = arrayOfData_LE_copy.map(element => {
           lines.push(
