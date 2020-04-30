@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "d3": "^5.9.1",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "numbro": "^2.1.2",
     "save-svg-as-png": "^1.4.14",
     "webpack": "^4.29.6",
